@@ -46,6 +46,7 @@ public class Runner implements ApplicationRunner {
     private DingTalkApi dingTalkApi;
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        // 发送的group  消息文案  群@的手机号
         dingTalkApi.sendTextAndAt("label1", "测试群发，@", Arrays.asList("群内某人手机号"));
     }
 }
