@@ -53,3 +53,15 @@ public class Runner implements ApplicationRunner {
 <img width="250" alt="ac8e4f392c534bfce660392c18cc2befa9ac0e2972bb3209543f0ac08e99cbe0QzpcVXNlcnNcY29jb3d3eVxBcHBEYXRhXFJvYW1pbmdcRGluZ1RhbGtcMjA1Nzg0ODY1OV92MlxJbWFnZUZpbGVzXDE2Mzk2MzI3MDcyODdfREU4NTZEQ0QtMUI1NC00MDFmLTgwNjYtOEY1REUwNjc1OEUxLnBuZw==" src="https://user-images.githubusercontent.com/63331147/146315825-4145b52a-2ff7-4bf2-88d2-1e4b650c9ef8.png" height="100">
 
 <img width="250" alt="472e2fd1b6f6f4a5ee1c0fd6f09d12af404ebed51cea1b47eca999d6ee52055aQzpcVXNlcnNcY29jb3d3eVxBcHBEYXRhXFJvYW1pbmdcRGluZ1RhbGtcMjA1Nzg0ODY1OV92MlxJbWFnZUZpbGVzXDE2Mzk2MzI3MDcyNThfNTg4NzBCMkMtRTNDQy00NWU2LUE1MUQtMDBERDAyNTA1N0Q4LnBuZw==" src="https://user-images.githubusercontent.com/63331147/146315826-2cb0d8ed-8dc0-4f37-bd8e-8fb18cf5b776.png" height="100">
+
+### Jar包引用
+```
+将代码down下来后，打包**dingtalk-robot-spring-boot-starter**，引入即可
+ <dependency>
+     <groupId>cn.cocowwy</groupId>
+     <artifactId>dingtalk-robot-spring-boot-starter</artifactId>
+     <version>1.0-SNAPSHOT</version>
+ </dependency>
+```
+
+
