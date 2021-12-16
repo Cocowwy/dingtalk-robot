@@ -56,7 +56,9 @@ public class Runner implements ApplicationRunner {
 
 ### Jar包引用
 ```
-将代码down下来后，打包**dingtalk-robot-spring-boot-starter**，引入即可
+将代码down下来后，打包dingtalk-robot-spring-boot-starter，引入即可
+demo是测试用的，不需要理会~
+
  <dependency>
      <groupId>cn.cocowwy</groupId>
      <artifactId>dingtalk-robot-spring-boot-starter</artifactId>
