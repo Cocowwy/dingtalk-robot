@@ -22,8 +22,8 @@ cocowwy:
         signature: 群b的机器人的signature
         webhook: 群b的机器人的Webhook
       - label: label2
-        signature: 群b的机器人的signature
-        webhook: 群b的机器人的Webhook
+        signature: 群c的机器人的signature
+        webhook: 群c的机器人的Webhook
 ```
 robots下是一个机器人数组，可以放置任意多的机器人，
 如果将a，b，c机器人设置成同一个label，那么消息推送则会对同一个label组的机器人进行推送
