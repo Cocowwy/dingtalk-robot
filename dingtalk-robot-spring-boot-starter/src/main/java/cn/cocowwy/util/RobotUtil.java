@@ -1,5 +1,6 @@
 package cn.cocowwy.util;
 
+import cn.cocowwy.RobotException;
 import cn.cocowwy.config.RobotsProperties;
 import cn.cocowwy.dingtalk.RobotSendRequest;
 import cn.cocowwy.dingtalk.RobotSendResponse;
@@ -35,7 +36,7 @@ public class RobotUtil {
         List<RobotsProperties.Robot> robotGroup = robots.stream()
                 .filter(robot -> robot.getLabel().equals(label)).collect(Collectors.toList());
         if (CollectionUtils.isEmpty(robotGroup)) {
-            throw new RuntimeException("This robot does not exist , please configure it and try again");
+            throw new RobotException("This robot does not exist , please configure it and try again");
         }
         return robotGroup;
     }
