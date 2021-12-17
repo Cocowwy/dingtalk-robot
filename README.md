@@ -5,6 +5,7 @@ cocowwy-dingtalk-start
   - 对同一个分组内的机器人，批量发送指定的消息
   - 在上述功能的基础上，实现根据手机号@指定人员
   - 在上述功能的情况下，实现消息延时发送，消息定时发送（coding...）
+  - 实现一个消息能被同一个分组内的机器人随机消费，按权重消费（coding...）
  
  使用方式，引入 cocowwy-dingtalk-start 
  在业务层注入**DingTalkApi**
