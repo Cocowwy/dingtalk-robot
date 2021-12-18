@@ -1,6 +1,7 @@
 package cn.cocowwy.config;
 
-import cn.cocowwy.dingtalk.DingTalkApi;
+import cn.cocowwy.dingtalk.DingTalkGroupApi;
+import cn.cocowwy.dingtalk.DingTalkRobotApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -12,14 +13,17 @@ import org.springframework.web.client.RestTemplate;
  * @create 2021-12-12-10:20
  */
 @Configuration
-@EnableConfigurationProperties(RobotsProperties.class)
+@EnableConfigurationProperties({RobotsHookProperties.class, RobotsProperties.class})
 public class DingtalkRobotAutoConfiguration {
-    @Autowired
-    private RobotsProperties robotsProperties;
 
     @Bean
-    public DingTalkApi dingTalkApi() {
-        return new DingTalkApi();
+    public DingTalkGroupApi dingTalkGroupApi() {
+        return new DingTalkGroupApi();
+    }
+
+    @Bean
+    public DingTalkRobotApi dingTalkRobotApi() {
+        return new DingTalkRobotApi();
     }
 
     @Bean
