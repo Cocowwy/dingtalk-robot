@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * 群机器人API---钉钉通过webhook接入
+ * 群机器人有消息限制 1min 20条
  * @author Cocowwy
  * @since 2021/6/8
  */
@@ -29,9 +30,9 @@ public class DingTalkGroupApi {
      * @param message  文本消息体
      * @return
      */
-    public void sendText(String label, String message) throws Exception {
+    public void sendText(String label, String message) {
         List<RobotsHookProperties.Robot> robotGroup = RobotUtil.getRobotGroup(label, robotsHookProperties.getHooks());
-        RobotUtil.sendMessageAtAll(CollectionUtils.lastElement(robotGroup), message);
+        RobotUtil.sendHookMessageAtAll(CollectionUtils.lastElement(robotGroup), message);
     }
 
     /**
@@ -39,9 +40,9 @@ public class DingTalkGroupApi {
      * @param label
      * @param phones
      */
-    public void sendTextAndAt(String label, String message, List<String> phones) throws Exception {
+    public void sendTextAndAt(String label, String message, List<String> phones)  {
         List<RobotsHookProperties.Robot> robotGroup = RobotUtil.getRobotGroup(label, robotsHookProperties.getHooks());
-        RobotUtil.sendMessageAtAll(CollectionUtils.lastElement(robotGroup), message);
+        RobotUtil.sendHookMessage(CollectionUtils.lastElement(robotGroup), message, phones);
     }
 
     /**
@@ -49,10 +50,8 @@ public class DingTalkGroupApi {
      * @param label
      */
     @Deprecated
-    public void sendTextAndAtAll(String label, String message) throws Exception {
-        List<RobotsHookProperties.Robot>  robotGroup= RobotUtil.getRobotGroup(label, robotsHookProperties.getHooks());
-        RobotUtil.sendMessageAtAll(CollectionUtils.lastElement(robotGroup), message);
+    public void sendTextAndAtAll(String label, String message)  {
+        List<RobotsHookProperties.Robot> robotGroup = RobotUtil.getRobotGroup(label, robotsHookProperties.getHooks());
+        RobotUtil.sendHookMessageAtAll(CollectionUtils.lastElement(robotGroup), message);
     }
-
-
 }

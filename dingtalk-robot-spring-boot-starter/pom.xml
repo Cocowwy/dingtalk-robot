@@ -44,6 +44,11 @@
             <artifactId>alibaba-dingtalk-service-sdk</artifactId>
             <version>1.0.1</version>
         </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-cache</artifactId>
+            <version>5.7.17</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>${project.artifactId}</finalName>
