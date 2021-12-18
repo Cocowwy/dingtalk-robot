@@ -7,24 +7,34 @@ import java.util.List;
 
 /**
  * @author cocowwy.cn
- * @create 2021-12-12-10:28
+ * @create 2021-12-12-17:13
  */
-@ConfigurationProperties(prefix = "cocowwy.dingding")
+@ConfigurationProperties(prefix = "cocowwy.dingding.robots", ignoreInvalidFields = true)
 public class RobotsProperties {
-    private List<Robot> robots = new ArrayList<>();
+    private List<Robot> robot = new ArrayList<>();
 
-    public List<Robot> getRobots() {
-        return robots;
+    public List<Robot> getRobot() {
+        return robot;
     }
 
-    public void setRobots(List<Robot> robots) {
-        this.robots = robots;
+    public void setRobot(List<Robot> robot) {
+        this.robot = robot;
     }
 
     public static class Robot {
         private String label;
-        private String signature;
-        private String webhook;
+        private String agentId;
+        private String appKey;
+        private String appSecret;
+        private Integer tokenRefresh = 110;
+
+        public String getAgentId() {
+            return agentId;
+        }
+
+        public void setAgentId(String agentId) {
+            this.agentId = agentId;
+        }
 
         public String getLabel() {
             return label;
@@ -34,20 +44,28 @@ public class RobotsProperties {
             this.label = label;
         }
 
-        public String getSignature() {
-            return signature;
+        public String getAppKey() {
+            return appKey;
         }
 
-        public void setSignature(String signature) {
-            this.signature = signature;
+        public void setAppKey(String appKey) {
+            this.appKey = appKey;
         }
 
-        public String getWebhook() {
-            return webhook;
+        public String getAppSecret() {
+            return appSecret;
         }
 
-        public void setWebhook(String webhook) {
-            this.webhook = webhook;
+        public void setAppSecret(String appSecret) {
+            this.appSecret = appSecret;
+        }
+
+        public Integer getTokenRefresh() {
+            return tokenRefresh;
+        }
+
+        public void setTokenRefresh(Integer tokenRefresh) {
+            this.tokenRefresh = tokenRefresh;
         }
     }
 }
