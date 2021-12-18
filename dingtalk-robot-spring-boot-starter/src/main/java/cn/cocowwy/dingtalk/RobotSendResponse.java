@@ -7,25 +7,10 @@ import lombok.Data;
  * @author Cocowwy
  * @since 2021/6/8
  */
+@Data
 public class RobotSendResponse {
     @JsonProperty("errcode")
-    private Long errorCode;
+    private Long errcode;
     @JsonProperty("errmsg")
-    private String errorMessage;
-
-    public Long getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(Long errorCode) {
-        this.errorCode = errorCode;
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
+    private String errmsg;
 }

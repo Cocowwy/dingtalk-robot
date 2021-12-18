@@ -1,9 +1,9 @@
 package cn.cocowwy.util;
 
-import cn.cocowwy.RobotException;
 import cn.cocowwy.config.RobotsProperties;
 import cn.cocowwy.dingtalk.RobotSendRequest;
 import cn.cocowwy.dingtalk.RobotSendResponse;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -36,7 +36,7 @@ public class RobotUtil {
         List<RobotsProperties.Robot> robotGroup = robots.stream()
                 .filter(robot -> robot.getLabel().equals(label)).collect(Collectors.toList());
         if (CollectionUtils.isEmpty(robotGroup)) {
-            throw new RobotException("This robot does not exist , please configure it and try again");
+            logger.error("This robot does not exist , please configure it and try again");
         }
         return robotGroup;
     }
@@ -92,8 +92,9 @@ public class RobotUtil {
         headers.set("Content-Type", "application/json");
         HttpEntity<RobotSendRequest> httpEntity = new HttpEntity<>(request, headers);
 
-        ResponseEntity<RobotSendResponse> response = restTemplate.postForEntity(endpoint, httpEntity, RobotSendResponse.class);
-        if (response.getStatusCode() != HttpStatus.OK || response.getBody().getErrorCode() != 0) {
+        ResponseEntity<String> response = restTemplate.postForEntity(endpoint, httpEntity, String.class);
+        if (response.getStatusCode() != HttpStatus.OK
+                || JSONObject.parseObject(response.getBody(), RobotSendResponse.class).getErrcode() != 0) {
             logger.error("failed to send dingding message, response：" + response.getBody());
         }
     }
