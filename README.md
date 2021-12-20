@@ -46,7 +46,7 @@ robot 数组是一套钉钉机器人
 ![image](https://user-images.githubusercontent.com/63331147/146709663-a2db71f5-226d-4332-90b0-ffb67f14f53e.png)
 
 ### 如何使用？
-注入即可使用相应的api
+注入即可使用相应的api，钉钉机器人的通过label来对机器人进行区分
 ```
 /**
  * @author cocowwy.cn
