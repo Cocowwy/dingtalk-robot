@@ -22,7 +22,11 @@ public class DingTalkRobotApi {
     private RobotsProperties robotsProperties;
 
     /**
-     * 向指定的机器人根据手机号群发消息
+     * 根据手机号向指定人发送消息
+     * @param label 机器人标识
+     * @param phones 手机号集合
+     * @param message 消息
+     * @param title 标题
      */
     public void sendMessageByPhonesAt(String label, List<String> phones, String message, String title) {
         try {
@@ -37,6 +41,13 @@ public class DingTalkRobotApi {
         }
     }
 
+    /**
+     * 根据用户id给指定人发送消息
+     * @param label 机器人标识
+     * @param userids userid集合
+     * @param message 消息
+     * @param title 标题
+     */
     public void sendMessageByUserIdsAt(String label, List<String> userids, String message, String title) {
         try {
             List<RobotsProperties.Robot> robots = RobotUtil.getRobot(label, robotsProperties.getRobot());

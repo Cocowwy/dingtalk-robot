@@ -42,11 +42,7 @@ import java.util.stream.Collectors;
  * @author cocowwy.cn
  * @create 2021-12-12-11:31
  */
-public class RobotUtil {
-    private static final String URL_SUFFIX = "&timestamp=%s&sign=%s";
-    private static final String TOKEN_URL = "https://oapi.dingtalk.com/gettoken";
-    private static final String GET_USERID_URL = "https://oapi.dingtalk.com/topapi/v2/user/getbymobile?access_token=";
-
+public class RobotUtil extends StringPool {
     private static final Log logger = LogFactory.getLog(RobotUtil.class);
     private static final RestTemplate restTemplate = new RestTemplate();
     private static TimedCache<String, String> tokenCachePool = CacheUtil.newTimedCache(0L);
@@ -86,32 +82,32 @@ public class RobotUtil {
         return rsp.getAccessToken();
     }
 
-    public static void sendMessage2Sb(RobotsProperties.Robot robot, List<String> phones, String message,String title) throws Exception {
+    public static void sendMessage2Sb(RobotsProperties.Robot robot, List<String> phones, String message, String title) throws Exception {
         List<String> userIds = getUserIdsByPhones(robot, phones);
 
         JSONObject msg = new JSONObject();
-        msg.put("text", message);
-        msg.put("title", title);
+        msg.put(TEXT, message);
+        msg.put(TITLE, title);
         BatchSendOTOHeaders batchSendOTOHeaders = new BatchSendOTOHeaders();
         batchSendOTOHeaders.xAcsDingtalkAccessToken = getRobotToken(robot);
         BatchSendOTORequest batchSendOTORequest = new BatchSendOTORequest()
                 .setRobotCode(robot.getAppKey())
                 .setUserIds(userIds)
-                .setMsgKey("sampleMarkdown")
+                .setMsgKey(SAMPLE_MARKDOWN)
                 .setMsgParam(String.valueOf(msg));
         client.batchSendOTOWithOptions(batchSendOTORequest, batchSendOTOHeaders, new RuntimeOptions());
     }
 
-    public static void sendMessageByUserIdsAt(RobotsProperties.Robot robot, List<String> userids, String message,String title) throws Exception {
+    public static void sendMessageByUserIdsAt(RobotsProperties.Robot robot, List<String> userids, String message, String title) throws Exception {
         JSONObject msg = new JSONObject();
-        msg.put("text", message);
-        msg.put("title", title);
+        msg.put(TEXT, message);
+        msg.put(TITLE, title);
         BatchSendOTOHeaders batchSendOTOHeaders = new BatchSendOTOHeaders();
         batchSendOTOHeaders.xAcsDingtalkAccessToken = getRobotToken(robot);
         BatchSendOTORequest batchSendOTORequest = new BatchSendOTORequest()
                 .setRobotCode(robot.getAppKey())
                 .setUserIds(userids)
-                .setMsgKey("sampleMarkdown")
+                .setMsgKey(SAMPLE_MARKDOWN)
                 .setMsgParam(String.valueOf(msg));
         client.batchSendOTOWithOptions(batchSendOTORequest, batchSendOTOHeaders, new RuntimeOptions());
     }
@@ -121,7 +117,7 @@ public class RobotUtil {
         List<String> userIds = new ArrayList<>();
         phones.forEach(phone -> {
             JSONObject getUerId = new JSONObject();
-            getUerId.put("mobile", phones.get(0));
+            getUerId.put(MOBILE, phone);
             ResponseEntity<String> getUserId = null;
             try {
                 getUserId = restTemplate.postForEntity(GET_USERID_URL + getRobotToken(robot)
@@ -161,7 +157,7 @@ public class RobotUtil {
      */
     public static void sendHookMessage(RobotsHookProperties.Robot robot, String message, List<String> phones) {
         RobotSendRequest request = new RobotSendRequest();
-        request.setMessageType("text");
+        request.setMessageType(TEXT);
         if (null != phones) {
             RobotSendRequest.At at = new RobotSendRequest.At();
             at.setAtMobiles(phones);
@@ -181,7 +177,7 @@ public class RobotUtil {
      */
     public static void sendHookMessageAtAll(RobotsHookProperties.Robot robot, String message) {
         RobotSendRequest request = new RobotSendRequest();
-        request.setMessageType("text");
+        request.setMessageType(TEXT);
         RobotSendRequest.At at = new RobotSendRequest.At();
         at.setAtAll(true);
         at.setAtMobiles(null);
