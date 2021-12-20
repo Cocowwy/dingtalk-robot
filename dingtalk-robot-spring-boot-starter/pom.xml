@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.cocowwy</groupId>
-    <artifactId>dingtalk-robot-cocowy</artifactId>
+    <artifactId>dingtalk-robot-spring-boot-starter</artifactId>
     <version>1.0.1-SNAPSHOT</version>
 
     <properties>
