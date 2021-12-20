@@ -57,8 +57,12 @@ public class RobotUtil extends StringPool {
         }
     }
 
-    public static String getRobotToken(RobotsProperties.Robot robot) throws ApiException {
-        String token = tokenCachePool.get(robot.getLabel(), Boolean.FALSE);
+    public static String getRobotToken(RobotsProperties.Robot robot, Boolean useCache) throws ApiException {
+        String token = null;
+        if (useCache) {
+            token = tokenCachePool.get(robot.getLabel(), Boolean.FALSE);
+        }
+
         if (null != token) {
             return token;
         }
@@ -86,7 +90,7 @@ public class RobotUtil extends StringPool {
         msg.put(TEXT, message);
         msg.put(TITLE, title);
         BatchSendOTOHeaders batchSendOTOHeaders = new BatchSendOTOHeaders();
-        batchSendOTOHeaders.xAcsDingtalkAccessToken = getRobotToken(robot);
+        batchSendOTOHeaders.xAcsDingtalkAccessToken = getRobotToken(robot, true);
         BatchSendOTORequest batchSendOTORequest = new BatchSendOTORequest()
                 .setRobotCode(robot.getAppKey())
                 .setUserIds(userIds)
@@ -100,7 +104,7 @@ public class RobotUtil extends StringPool {
         msg.put(TEXT, message);
         msg.put(TITLE, title);
         BatchSendOTOHeaders batchSendOTOHeaders = new BatchSendOTOHeaders();
-        batchSendOTOHeaders.xAcsDingtalkAccessToken = getRobotToken(robot);
+        batchSendOTOHeaders.xAcsDingtalkAccessToken = getRobotToken(robot, true);
         BatchSendOTORequest batchSendOTORequest = new BatchSendOTORequest()
                 .setRobotCode(robot.getAppKey())
                 .setUserIds(userids)
@@ -117,7 +121,7 @@ public class RobotUtil extends StringPool {
             getUerId.put(MOBILE, phone);
             ResponseEntity<String> getUserId = null;
             try {
-                getUserId = restTemplate.postForEntity(GET_USERID_URL + getRobotToken(robot)
+                getUserId = restTemplate.postForEntity(GET_USERID_URL + getRobotToken(robot, true)
                         , getUerId, String.class);
                 userIds.add(String.valueOf(JSONObject.parseObject(String.valueOf(JSONObject.parseObject(getUserId.getBody()).get("result"))).get("userid")));
             } catch (ApiException e) {

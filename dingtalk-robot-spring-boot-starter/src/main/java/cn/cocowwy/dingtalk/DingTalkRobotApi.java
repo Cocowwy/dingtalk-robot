@@ -3,12 +3,14 @@ package cn.cocowwy.dingtalk;
 import cn.cocowwy.util.RobotException;
 import cn.cocowwy.config.RobotsProperties;
 import cn.cocowwy.util.RobotUtil;
+import com.taobao.api.ApiException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 单聊机器人API
@@ -57,6 +59,20 @@ public class DingTalkRobotApi {
             // ignore..
             logger.error("RobotException exception  ：", e);
         } catch (Exception e) {
+            logger.error("error" + e);
+        }
+    }
+
+    /**
+     * 查询指定机器人的token
+     * @param label 机器人标识
+     * @param useCache 是否走缓存，默认走
+     */
+    public void getToken(String label, Boolean useCache) {
+        List<RobotsProperties.Robot> robots = RobotUtil.getRobot(label, robotsProperties.getRobot());
+        try {
+            RobotUtil.getRobotToken(CollectionUtils.lastElement(robots), Optional.ofNullable(useCache).orElse(true));
+        } catch (RobotException | ApiException e) {
             logger.error("error" + e);
         }
     }
