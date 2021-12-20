@@ -74,7 +74,7 @@ demo是测试用的，不需要理会~
 
  <dependency>
      <groupId>cn.cocowwy</groupId>
-     <artifactId>dingtalk-robot-spring-boot-starter</artifactId>
+     <artifactId>dingtalk-robot-cocowy</artifactId>
      <version>1.0-SNAPSHOT</version>
  </dependency>
 ```
