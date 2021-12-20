@@ -1,6 +1,6 @@
 package cn.cocowwy.dingtalk;
 
-import cn.cocowwy.RobotException;
+import cn.cocowwy.util.RobotException;
 import cn.cocowwy.config.RobotsProperties;
 import cn.cocowwy.util.RobotUtil;
 import org.apache.commons.logging.Log;

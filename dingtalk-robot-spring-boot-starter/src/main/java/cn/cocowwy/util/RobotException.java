@@ -1,4 +1,4 @@
-package cn.cocowwy;
+package cn.cocowwy.util;
 
 /**
  * @author cocowwy.cn

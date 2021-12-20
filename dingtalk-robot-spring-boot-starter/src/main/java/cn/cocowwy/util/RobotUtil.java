@@ -1,18 +1,15 @@
 package cn.cocowwy.util;
 
-import cn.cocowwy.RobotException;
 import cn.cocowwy.config.RobotsHookProperties;
 import cn.cocowwy.config.RobotsProperties;
 import cn.cocowwy.dingtalk.RobotSendRequest;
 import cn.cocowwy.dingtalk.RobotSendResponse;
 import cn.hutool.cache.CacheUtil;
 import cn.hutool.cache.impl.TimedCache;
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.aliyun.dingtalkrobot_1_0.Client;
 import com.aliyun.dingtalkrobot_1_0.models.BatchSendOTOHeaders;
 import com.aliyun.dingtalkrobot_1_0.models.BatchSendOTORequest;
-import com.aliyun.tea.TeaException;
 import com.aliyun.teaopenapi.models.Config;
 import com.aliyun.teautil.models.RuntimeOptions;
 import com.dingtalk.api.DefaultDingTalkClient;
