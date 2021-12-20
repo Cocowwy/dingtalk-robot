@@ -7,6 +7,7 @@ import cn.cocowwy.dingtalk.RobotSendRequest;
 import cn.cocowwy.dingtalk.RobotSendResponse;
 import cn.hutool.cache.CacheUtil;
 import cn.hutool.cache.impl.TimedCache;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.aliyun.dingtalkrobot_1_0.Client;
 import com.aliyun.dingtalkrobot_1_0.models.BatchSendOTOHeaders;
@@ -33,6 +34,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,13 +44,11 @@ import java.util.stream.Collectors;
  */
 public class RobotUtil {
     private static final String URL_SUFFIX = "&timestamp=%s&sign=%s";
-
     private static final String TOKEN_URL = "https://oapi.dingtalk.com/gettoken";
+    private static final String GET_USERID_URL = "https://oapi.dingtalk.com/topapi/v2/user/getbymobile?access_token=";
 
     private static final Log logger = LogFactory.getLog(RobotUtil.class);
-
     private static final RestTemplate restTemplate = new RestTemplate();
-
     private static TimedCache<String, String> tokenCachePool = CacheUtil.newTimedCache(0L);
 
     private static Client client = null;
@@ -79,22 +79,60 @@ public class RobotUtil {
         rsp = client.execute(req);
 
         if (!rsp.isSuccess() || rsp.getErrcode() != 0) {
-            throw new RobotException("request token error , " + rsp.getErrmsg());
+            throw new RobotException("obtain token error , " + rsp.getErrmsg());
         }
         tokenCachePool.put(robot.getLabel(), rsp.getAccessToken(),
                 Long.valueOf(robot.getTokenRefresh()) * 1000 * 60);
-        return rsp.getBody();
+        return rsp.getAccessToken();
     }
 
-    public static void sendMessage2Sb(RobotsProperties.Robot robot, List<String> phones, String message) throws Exception {
+    public static void sendMessage2Sb(RobotsProperties.Robot robot, List<String> phones, String message,String title) throws Exception {
+        List<String> userIds = getUserIdsByPhones(robot, phones);
+
+        JSONObject msg = new JSONObject();
+        msg.put("text", message);
+        msg.put("title", title);
         BatchSendOTOHeaders batchSendOTOHeaders = new BatchSendOTOHeaders();
         batchSendOTOHeaders.xAcsDingtalkAccessToken = getRobotToken(robot);
         BatchSendOTORequest batchSendOTORequest = new BatchSendOTORequest()
                 .setRobotCode(robot.getAppKey())
-                .setUserIds(phones)
-                .setMsgKey(robot.getAppKey())
-                .setMsgParam("{\"text\": " + message + "}");
+                .setUserIds(userIds)
+                .setMsgKey("sampleMarkdown")
+                .setMsgParam(String.valueOf(msg));
         client.batchSendOTOWithOptions(batchSendOTORequest, batchSendOTOHeaders, new RuntimeOptions());
+    }
+
+    public static void sendMessageByUserIdsAt(RobotsProperties.Robot robot, List<String> userids, String message,String title) throws Exception {
+        JSONObject msg = new JSONObject();
+        msg.put("text", message);
+        msg.put("title", title);
+        BatchSendOTOHeaders batchSendOTOHeaders = new BatchSendOTOHeaders();
+        batchSendOTOHeaders.xAcsDingtalkAccessToken = getRobotToken(robot);
+        BatchSendOTORequest batchSendOTORequest = new BatchSendOTORequest()
+                .setRobotCode(robot.getAppKey())
+                .setUserIds(userids)
+                .setMsgKey("sampleMarkdown")
+                .setMsgParam(String.valueOf(msg));
+        client.batchSendOTOWithOptions(batchSendOTORequest, batchSendOTOHeaders, new RuntimeOptions());
+    }
+
+    private static List<String> getUserIdsByPhones(RobotsProperties.Robot robot, List<String> phones) {
+        // 根据手机号获取用户的userId
+        List<String> userIds = new ArrayList<>();
+        phones.forEach(phone -> {
+            JSONObject getUerId = new JSONObject();
+            getUerId.put("mobile", phones.get(0));
+            ResponseEntity<String> getUserId = null;
+            try {
+                getUserId = restTemplate.postForEntity(GET_USERID_URL + getRobotToken(robot)
+                        , getUerId, String.class);
+                userIds.add(String.valueOf(JSONObject.parseObject(String.valueOf(JSONObject.parseObject(getUserId.getBody()).get("result"))).get("userid")));
+            } catch (ApiException e) {
+                // ingnore ..
+                logger.error(phone + " get userid error ," + getUserId);
+            }
+        });
+        return userIds;
     }
 
     public static List<RobotsHookProperties.Robot> getRobotGroup(String label, List<RobotsHookProperties.Robot> robots) {
@@ -145,7 +183,8 @@ public class RobotUtil {
         RobotSendRequest request = new RobotSendRequest();
         request.setMessageType("text");
         RobotSendRequest.At at = new RobotSendRequest.At();
-        at.setAtAll(Boolean.TRUE);
+        at.setAtAll(true);
+        at.setAtMobiles(null);
         request.setAt(at);
         RobotSendRequest.Text text = new RobotSendRequest.Text();
         text.setContent(message);

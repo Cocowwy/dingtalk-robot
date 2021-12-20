@@ -3,11 +3,11 @@ package cn.cocowwy.dingtalk;
 import cn.cocowwy.RobotException;
 import cn.cocowwy.config.RobotsProperties;
 import cn.cocowwy.util.RobotUtil;
-import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
-import java.io.StringWriter;
 import java.util.List;
 
 /**
@@ -15,22 +15,38 @@ import java.util.List;
  * @author cocowwy.cn
  * @create 2021-12-12-17:22
  */
-@Slf4j
 public class DingTalkRobotApi {
+    private static final Log logger = LogFactory.getLog(RobotUtil.class);
+
     @Autowired
     private RobotsProperties robotsProperties;
 
     /**
      * 向指定的机器人根据手机号群发消息
      */
-    public void sendMessageAt(String label, String message, List<String> phones) throws Exception {
+    public void sendMessageByPhonesAt(String label, List<String> phones, String message, String title) {
         try {
             List<RobotsProperties.Robot> robots = RobotUtil.getRobot(label, robotsProperties.getRobot());
             RobotsProperties.Robot robot = CollectionUtils.lastElement(robots);
-            RobotUtil.sendMessage2Sb(robot, phones, message);
+            RobotUtil.sendMessage2Sb(robot, phones, message, title);
         } catch (RobotException e) {
             // ignore..
-            log.error("RobotException exception  ：", e);
+            logger.error("RobotException exception  ：", e);
+        } catch (Exception e) {
+            logger.error("error" + e);
+        }
+    }
+
+    public void sendMessageByUserIdsAt(String label, List<String> userids, String message, String title) {
+        try {
+            List<RobotsProperties.Robot> robots = RobotUtil.getRobot(label, robotsProperties.getRobot());
+            RobotsProperties.Robot robot = CollectionUtils.lastElement(robots);
+            RobotUtil.sendMessageByUserIdsAt(robot, userids, message, title);
+        } catch (RobotException e) {
+            // ignore..
+            logger.error("RobotException exception  ：", e);
+        } catch (Exception e) {
+            logger.error("error" + e);
         }
     }
 }

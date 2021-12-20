@@ -3,12 +3,9 @@ package cn.cocowwy.dingtalk;
 
 import cn.cocowwy.config.RobotsHookProperties;
 import cn.cocowwy.util.RobotUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -17,7 +14,6 @@ import java.util.List;
  * @author Cocowwy
  * @since 2021/6/8
  */
-@Slf4j
 public class DingTalkGroupApi {
 
     @Autowired
@@ -37,20 +33,22 @@ public class DingTalkGroupApi {
 
     /**
      * 向指定 Label 的群机器人发送群消息，并且根据手机号@人员
+     *
      * @param label
      * @param phones
      */
-    public void sendTextAndAt(String label, String message, List<String> phones)  {
+    public void sendTextAndAt(String label, String message, List<String> phones) {
         List<RobotsHookProperties.Robot> robotGroup = RobotUtil.getRobotGroup(label, robotsHookProperties.getHooks());
         RobotUtil.sendHookMessage(CollectionUtils.lastElement(robotGroup), message, phones);
     }
 
     /**
      * 向指定 Label 的群机器人发送群消息，并且@所有人
+     *
      * @param label
      */
     @Deprecated
-    public void sendTextAndAtAll(String label, String message)  {
+    public void sendTextAndAtAll(String label, String message) {
         List<RobotsHookProperties.Robot> robotGroup = RobotUtil.getRobotGroup(label, robotsHookProperties.getHooks());
         RobotUtil.sendHookMessageAtAll(CollectionUtils.lastElement(robotGroup), message);
     }
