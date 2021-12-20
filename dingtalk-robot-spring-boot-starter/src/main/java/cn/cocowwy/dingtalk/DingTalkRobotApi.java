@@ -3,6 +3,7 @@ package cn.cocowwy.dingtalk;
 import cn.cocowwy.util.RobotException;
 import cn.cocowwy.config.RobotsProperties;
 import cn.cocowwy.util.RobotUtil;
+import cn.hutool.core.util.StrUtil;
 import com.taobao.api.ApiException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -68,12 +69,13 @@ public class DingTalkRobotApi {
      * @param label 机器人标识
      * @param useCache 是否走缓存，默认走
      */
-    public void getToken(String label, Boolean useCache) {
+    public String getToken(String label, Boolean useCache) {
         List<RobotsProperties.Robot> robots = RobotUtil.getRobot(label, robotsProperties.getRobot());
         try {
-            RobotUtil.getRobotToken(CollectionUtils.lastElement(robots), Optional.ofNullable(useCache).orElse(true));
+            return RobotUtil.getRobotToken(CollectionUtils.lastElement(robots), Optional.ofNullable(useCache).orElse(true));
         } catch (RobotException | ApiException e) {
             logger.error("error" + e);
+            return StrUtil.EMPTY;
         }
     }
 }
