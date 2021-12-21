@@ -3,10 +3,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <packaging>jar</packaging>
 
     <groupId>cn.cocowwy</groupId>
-    <artifactId>dingtalk-robot-spring-boot-starter</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <artifactId>dingtalk-robot-cocowwy</artifactId>
+    <version>1.0.6-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -50,7 +51,23 @@
             <version>5.7.17</version>
         </dependency>
     </dependencies>
+
     <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+
         <finalName>${project.artifactId}</finalName>
     </build>
 </project>

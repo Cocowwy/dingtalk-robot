@@ -5,7 +5,6 @@ import cn.cocowwy.dingtalk.DingTalkRobotApi;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
 
 /**
  * @author cocowwy.cn
@@ -23,10 +22,5 @@ public class DingtalkRobotAutoConfiguration {
     @Bean
     public DingTalkRobotApi dingTalkRobotApi() {
         return new DingTalkRobotApi();
-    }
-
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
     }
 }

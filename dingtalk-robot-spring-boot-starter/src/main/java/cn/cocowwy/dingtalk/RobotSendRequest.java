@@ -1,7 +1,5 @@
 package cn.cocowwy.dingtalk;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
 
 import java.util.List;
 
@@ -10,8 +8,7 @@ import java.util.List;
  * @since 2021/6/8
  */
 public class RobotSendRequest {
-    @JsonProperty("msgtype")
-    private String messageType;
+    private String msgtype;
     private Text text;
     private At at;
 
@@ -48,12 +45,12 @@ public class RobotSendRequest {
         }
     }
 
-    public String getMessageType() {
-        return messageType;
+    public String getMsgtype() {
+        return msgtype;
     }
 
-    public void setMessageType(String messageType) {
-        this.messageType = messageType;
+    public void setMsgtype(String msgtype) {
+        this.msgtype = msgtype;
     }
 
     public Text getText() {
