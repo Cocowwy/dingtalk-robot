@@ -2,11 +2,12 @@
 cocowwy-dingtalk-start
 钉钉机器人
 目前实现功能
-- 群机器人
+- **群机器人**
   - 对钉钉群引入的机器人进行管理，可根据业务统一调度不同群的机器人发送消息
   - 在上述功能的基础上，实现根据手机号@指定人员
   - 在上述功能的情况下，实现消息延时发送，消息定时发送（coding...）
-- 单聊机器人
+  - 由于群机器人有1分钟20条消息的上限，将开发短时间内多条消息拼成一条长消息发送（coding...）
+- **单聊机器人**
   - 对多个单聊机器人进行统一的管理，可细粒度的控制不同机器人根据手机号发送消息
   - 对token进行自定义缓存时间，调用方可以无需考虑开放平台对token的限流，api会自动对token进行自定义时长的缓存
   - 实现一个消息能被同一个分组内的机器人随机消费，按权重消费（coding...）
@@ -72,11 +73,11 @@ public class Runner implements ApplicationRunner {
 将代码down下来后，打包dingtalk-robot-spring-boot-starter，引入即可
 demo是测试用的，不需要理会~
 
- <dependency>
-     <groupId>cn.cocowwy</groupId>
-     <artifactId>dingtalk-robot-cocowy</artifactId>
-     <version>1.0-SNAPSHOT</version>
- </dependency>
+<dependency>
+    <groupId>cn.cocowwy</groupId>
+    <artifactId>dingtalk-robot-cocowwy</artifactId>
+    <version>1.0.6-SNAPSHOT</version>
+</dependency>
 ```
 
 
