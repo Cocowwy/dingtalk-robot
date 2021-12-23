@@ -9,7 +9,7 @@ import java.util.List;
  * @author cocowwy.cn
  * @create 2021-12-12-10:28
  */
-@ConfigurationProperties(prefix = "cocowwy.dingding.robots")
+@ConfigurationProperties(prefix = "dingding.robots")
 public class RobotsHookProperties {
     private List<Robot> hooks = new ArrayList<>();
 
