@@ -1,4 +1,4 @@
-package cn.cocowwy.dingtalk;
+package cn.cocowwy.dingtalk.rqrs;
 
 /**
  * @author Cocowwy

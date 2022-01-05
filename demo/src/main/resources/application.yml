@@ -1,15 +1,13 @@
-cocowwy:
-  dingding:
-    robots:
-      - label: label1
-        signature: 群a的机器人的signature
-        webhook: 群a的机器人的Webhook
-      - label: label1
-        signature: 群b的机器人的signature
-        webhook: 群b的机器人的Webhook
-      - label: label2
-        signature: 群c的机器人的signature
-        webhook: 群c的机器人的Webhook
-
-server:
-  port: 8081
+dingding:
+  robots:
+    robot:
+      - label: SexyteaRobot
+        agentId: 8972001
+        appKey: dingefmj6nsfgb3xv0jf
+        appSecret: bT0BLdUf01yjxs5w5LUeLyUGXnewxqyQl_oOtXlT6mke5-HU-rePQNCmXQdvOQLB
+        # 机器人Token缓存时长，默认110min
+        tokenRefresh: 100
+    hooks:
+      - label: mt
+        signature: SEC9b357c26cd86d30a336f755cbaa9904e0534a6792ee60e11bfd6517e71866aed
+        webhook: https://oapi.dingtalk.com/robot/send?access_token=605cce9265dba30efdcde2a6bbafb00a3161047984fdf5692e4f07164fe4e6e6

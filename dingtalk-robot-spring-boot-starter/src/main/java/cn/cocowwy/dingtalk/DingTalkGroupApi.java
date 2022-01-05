@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 群机器人API---钉钉通过webhook接入
@@ -18,6 +19,14 @@ public class DingTalkGroupApi {
 
     @Autowired
     private RobotsHookProperties robotsHookProperties;
+
+    /**
+     * 获取单聊机器人列表
+     * @return
+     */
+    public List<String> getHooks() {
+        return robotsHookProperties.getHooks().stream().map(RobotsHookProperties.Robot::getLabel).collect(Collectors.toList());
+    }
 
     /**
      * 向指定 Label 的群机器人发送群消息

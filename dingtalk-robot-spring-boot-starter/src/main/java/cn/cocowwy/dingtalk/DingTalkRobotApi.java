@@ -1,7 +1,7 @@
 package cn.cocowwy.dingtalk;
 
-import cn.cocowwy.util.RobotException;
 import cn.cocowwy.config.RobotsProperties;
+import cn.cocowwy.util.RobotException;
 import cn.cocowwy.util.RobotUtil;
 import cn.hutool.core.util.StrUtil;
 import com.taobao.api.ApiException;
@@ -12,6 +12,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * 单聊机器人API
@@ -23,6 +24,14 @@ public class DingTalkRobotApi {
 
     @Autowired
     private RobotsProperties robotsProperties;
+
+    /**
+     * 获取单聊机器人列表
+     * @return
+     */
+    public List<String> getRobots() {
+        return robotsProperties.getRobot().stream().map(RobotsProperties.Robot::getLabel).collect(Collectors.toList());
+    }
 
     /**
      * 根据手机号向指定人发送消息

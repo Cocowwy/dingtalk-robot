@@ -2,8 +2,8 @@ package cn.cocowwy.util;
 
 import cn.cocowwy.config.RobotsHookProperties;
 import cn.cocowwy.config.RobotsProperties;
-import cn.cocowwy.dingtalk.RobotSendRequest;
-import cn.cocowwy.dingtalk.RobotSendResponse;
+import cn.cocowwy.dingtalk.rqrs.RobotSendRequest;
+import cn.cocowwy.dingtalk.rqrs.RobotSendResponse;
 import cn.hutool.cache.CacheUtil;
 import cn.hutool.cache.impl.TimedCache;
 import com.alibaba.fastjson.JSONObject;

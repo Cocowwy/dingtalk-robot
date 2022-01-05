@@ -8,8 +8,6 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-
 
 /**
  * @author cocowwy.cn
@@ -22,17 +20,17 @@ public class Runner implements ApplicationRunner {
     @Autowired
     private DingTalkGroupApi dingTalkGroupApi;
 
-    @Value("${cocowwy.dingding.robots.robot[0].label}")
-    private String robotDelivery;
-
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        String text = "事项：【MEITUAN】订单配送30分钟未送达\n" +
-                "门店名称：九龙仓LG层黄土岭店\n" +
-                "订单编码：211221914623850496\n" +
-                "骑手接单时间：Tue Dec 21 15:31:03 CST 2021";
-
-        dingTalkRobotApi.sendMessageByPhonesAt(robotDelivery, Arrays.asList("18673159925"), text, "===");
+//        String text = "事项：【MEITUAN】订单配送30分钟未送达\n" +
+//                "门店名称：九龙仓LG层黄土岭店\n" +
+//                "订单编码：211221914623850496\n" +
+//                "骑手接单时间：Tue Dec 21 15:31:03 CST 2021";
+//
+//        dingTalkRobotApi.sendMessageByPhonesAt(robotDelivery, Arrays.asList("18673159925"), text, "===");
+//        dingTalkGroupApi.sendText("mt", "xxxx");
+        dingTalkRobotApi.getRobots().forEach(System.out::println);
+        dingTalkGroupApi.getHooks().forEach(System.out::println);
     }
 }
