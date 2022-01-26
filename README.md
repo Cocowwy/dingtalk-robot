@@ -68,13 +68,11 @@ public class Runner implements ApplicationRunner {
 ```
 
 ### 如何引入？
-**将代码clone下来后**
-**cd 进 dingtalk-robot-spring-boot-starter 这个项目 **
+**将代码clone下来后cd 进 dingtalk-robot-spring-boot-starter 这个项目**
 ```
 mvn clean install
 ```
-接着再在/target目录下找到jar包，引入即可
-- 后续会放在maven公有云上
+**接着再在/target目录下找到jar包，引入即可...后续会放在maven公有云上**
 
 ```
 <dependency>
