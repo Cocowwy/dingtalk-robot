@@ -4,6 +4,7 @@ import cn.cocowwy.config.RobotsHookProperties;
 import cn.cocowwy.config.RobotsProperties;
 import cn.cocowwy.dingtalk.rqrs.RobotSendRequest;
 import cn.cocowwy.dingtalk.rqrs.RobotSendResponse;
+import cn.cocowwy.processor.LargeMessageProcessor;
 import cn.hutool.cache.CacheUtil;
 import cn.hutool.cache.impl.TimedCache;
 import com.alibaba.fastjson.JSONObject;
@@ -33,6 +34,8 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -43,8 +46,10 @@ public class RobotUtil extends StringPool {
     private static final Log logger = LogFactory.getLog(RobotUtil.class);
     private static final RestTemplate restTemplate = new RestTemplate();
     private static TimedCache<String, String> tokenCachePool = CacheUtil.newTimedCache(0L);
-
     private static Client client = null;
+
+    // 机器人hook标识--->该大消息处理器
+    private static Map<String, LargeMessageProcessor> largeMessageMap = new ConcurrentHashMap<>();
 
     static {
         Config config = new Config();
@@ -172,6 +177,21 @@ public class RobotUtil extends StringPool {
     }
 
     /**
+     * 频繁发送消息
+     * @param robot
+     * @param message
+     * @param phones
+     */
+    public synchronized static void sendLargeMessage(RobotsHookProperties.Robot robot, String message, List<String> phones) {
+
+        LargeMessageProcessor processor = largeMessageMap.get(robot.getLabel());
+        if (null == processor){
+            largeMessageMap.putIfAbsent(robot.getLabel(), new LargeMessageProcessor(robot));
+        }
+        largeMessageMap.get(robot.getLabel()).addMessage(message, phones);
+    }
+
+    /**
      * 发送群消息并at所有人
      * @param robot
      * @param message
@@ -205,7 +225,7 @@ public class RobotUtil extends StringPool {
         return sign;
     }
 
-    private static void send(RobotsHookProperties.Robot robot, RobotSendRequest request) {
+    public static void send(RobotsHookProperties.Robot robot, RobotSendRequest request) {
         Long timestamp = System.currentTimeMillis();
         String sign = obtainSign(robot, timestamp);
         String endpoint = String.format(robot.getWebhook() + URL_SUFFIX, timestamp, sign);

@@ -61,4 +61,18 @@ public class DingTalkGroupApi {
         List<RobotsHookProperties.Robot> robotGroup = RobotUtil.getRobotGroup(label, robotsHookProperties.getHooks());
         RobotUtil.sendHookMessageAtAll(CollectionUtils.lastElement(robotGroup), message);
     }
+
+    /**
+     * 用于解决群机器人1分钟的20条消息限制
+     *  - 该接口会在短时间内的消息自动拼接成长消息，默认缓存拼接时间为10s
+     *    如gapTime=10s
+     *  - 消息结尾进行进行两次斜杠n操作来区分单个消息
+     *  - 多次at人的话，会将at整合
+     * @param label 机器人的唯一标识
+     * @param message 消息
+     */
+    public void sendLargeText(String label, String message, List<String> phones) {
+        List<RobotsHookProperties.Robot> robotGroup = RobotUtil.getRobotGroup(label, robotsHookProperties.getHooks());
+        RobotUtil.sendLargeMessage(CollectionUtils.lastElement(robotGroup), message, phones);
+    }
 }
