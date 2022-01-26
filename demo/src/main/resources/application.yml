@@ -1,16 +1,16 @@
 dingding:
   robots:
     robot:
-      - label: SexyteaRobot
-        agentId: 8972001
-        appKey: dingefmj6nsfgb3xv0jf
-        appSecret: bT0BLdUf01yjxs5w5LUeLyUGXnewxqyQl_oOtXlT6mke5-HU-rePQNCmXQdvOQLB
+      - label:
+        agentId:
+        appKey:
+        appSecret:
         # 机器人Token缓存时长，默认110min
-        tokenRefresh: 100
+        tokenRefresh:
     hooks:
-      - label: large
-        signature: SECe3ef3a9d8799d95b10951b69aa32a49ccb32d1e9f752522a44004d94e45ecf25
-        webhook: https://oapi.dingtalk.com/robot/send?access_token=dd6e6bb144a48323d7d5c8a20be0c8074b6f787e47c6177abe0ad46e1ef168e3
+      - label:
+        signature:
+        webhook:
 
 server:
   port: 9001
