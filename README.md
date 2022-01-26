@@ -6,7 +6,7 @@ cocowwy-dingtalk-start
   - 对钉钉群引入的机器人进行管理，可根据业务统一调度不同群的机器人发送消息
   - 在上述功能的基础上，实现根据手机号@指定人员
   - 在上述功能的情况下，实现消息延时发送，消息定时发送（coding...）
-  - 由于群机器人有1分钟20条消息的上限，将开发短时间内多条消息拼成一条长消息发送（coding...）
+  - 由于群机器人有1分钟20条消息的上限，实现机器人对并发消息合并进行发送
 - **单聊机器人**
   - 对多个单聊机器人进行统一的管理，可细粒度的控制不同机器人根据手机号发送消息
   - 对token进行自定义缓存时间，调用方可以无需考虑开放平台对token的限流，api会自动对token进行自定义时长的缓存
@@ -14,29 +14,28 @@ cocowwy-dingtalk-start
 
 配置文件：
 ```
-cocowwy:
-  dingding:
-    robots:
-      hooks:
-        - label: 群1机器人
-          signature: 钉钉群的机器人的signature
-          webhook: 钉钉群的机器人的webhook
-        - label: 群2机器人
-          signature: 钉钉群的机器人的signature
-          webhook: 钉钉群的机器人的webhook
-      robot:
-        - label: 钉钉机器人1
-          agentId: 钉钉机器人的agentId
-          appKey: 钉钉机器人appKey
-          appSecret: 钉钉机器人appSecret
-          tokenRefresh: 机器人Token的缓存时长，默认110min
-        - label: 钉钉机器人2
-          agentId: 钉钉机器人的agentId
-          appKey: 钉钉机器人appKey
-          appSecret: 钉钉机器人appSecret
+dingding:
+  robots:
+    hooks:
+      - label: 群1机器人
+        signature: 钉钉群的机器人的signature
+        webhook: 钉钉群的机器人的webhook
+      - label: 群2机器人
+        signature: 钉钉群的机器人的signature
+        webhook: 钉钉群的机器人的webhook
+    robot:
+      - label: 钉钉机器人1
+        agentId: 钉钉机器人的agentId
+        appKey: 钉钉机器人appKey
+        appSecret: 钉钉机器人appSecret
+        tokenRefresh: 机器人Token的缓存时长，默认110min
+      - label: 钉钉机器人2
+        agentId: 钉钉机器人的agentId
+        appKey: 钉钉机器人appKey
+        appSecret: 钉钉机器人appSecret
 ```
-hooks 数组是一套webhook机器人
-robot 数组是一套钉钉机器人
+hooks 数组是一个webhook机器人数组，你可以塞一堆机器人来控制对每个机器人在不同群发的消息
+robot 数组是一套钉钉机器人,你也可以设置一堆机器人来私聊（骚扰）不同的人
 
 ### hooks配置方式
 点击群机器人--->机器人设置--->往下翻--->复制webhook--->安全设置点击加签,将密钥复制即可
@@ -68,15 +67,20 @@ public class Runner implements ApplicationRunner {
 }
 ```
 
-### Jar包引用
+### 如何引入？
+**将代码clone下来后**
+**cd 进 dingtalk-robot-spring-boot-starter 这个项目 **
 ```
-将代码down下来后，打包dingtalk-robot-spring-boot-starter，引入即可
-demo是测试用的，不需要理会~
+mvn clean install
+```
+接着再在/target目录下找到jar包，引入即可
+- 后续会放在maven公有云上
 
+```
 <dependency>
     <groupId>cn.cocowwy</groupId>
     <artifactId>dingtalk-robot-cocowwy</artifactId>
-    <version>1.0.6-SNAPSHOT</version>
+    <version>1.0.11-SNAPSHOT</version>
 </dependency>
 ```
 
