@@ -178,11 +178,12 @@ public class RobotUtil extends StringPool {
 
     /**
      * 频繁发送消息
+     *  - 用于解决钉钉机器人1min20条消息的限制
      * @param robot
      * @param message
      * @param phones
      */
-    public synchronized static void sendLargeMessage(RobotsHookProperties.Robot robot, String message, List<String> phones) {
+    public synchronized static void sendFrequentlyMessage(RobotsHookProperties.Robot robot, String message, List<String> phones) {
 
         LargeMessageProcessor processor = largeMessageMap.get(robot.getLabel());
         if (null == processor){

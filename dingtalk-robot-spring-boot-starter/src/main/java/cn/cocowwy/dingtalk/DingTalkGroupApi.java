@@ -71,8 +71,8 @@ public class DingTalkGroupApi {
      * @param label 机器人的唯一标识
      * @param message 消息
      */
-    public void sendLargeText(String label, String message, List<String> phones) {
+    public void sendFrequentlyMessage(String label, String message, List<String> phones) {
         List<RobotsHookProperties.Robot> robotGroup = RobotUtil.getRobotGroup(label, robotsHookProperties.getHooks());
-        RobotUtil.sendLargeMessage(CollectionUtils.lastElement(robotGroup), message, phones);
+        RobotUtil.sendFrequentlyMessage(CollectionUtils.lastElement(robotGroup), message, phones);
     }
 }

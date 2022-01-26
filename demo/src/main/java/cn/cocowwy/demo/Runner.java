@@ -28,7 +28,7 @@ public class Runner implements ApplicationRunner {
 //        dingTalkGroupApi.getHooks().forEach(System.out::println);
         for (int i = 0; i < 100; i++) {
             Thread.sleep(1 * 1000);
-            dingTalkGroupApi.sendLargeText("large", "----------测试长消息 ", Arrays.asList("18673159925"));
+            dingTalkGroupApi.sendFrequentlyMessage("large", "----------测试长消息 ", Arrays.asList("18673159925"));
         }
     }
 }
