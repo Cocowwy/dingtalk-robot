@@ -120,8 +120,6 @@ public class LargeMessageProcessor extends Thread {
             }
         };
 
-
-        // TODO 卡在这里了
-        job.run();
+        new Thread(job).start();
     }
 }
