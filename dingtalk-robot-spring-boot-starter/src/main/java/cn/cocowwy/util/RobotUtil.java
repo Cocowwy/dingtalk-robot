@@ -49,7 +49,7 @@ public class RobotUtil extends StringPool {
     private static Client client = null;
 
     // 机器人hook标识--->该大消息处理器
-    private static Map<String, LargeMessageProcessor> largeMessageMap = new ConcurrentHashMap<>();
+    public static Map<String, LargeMessageProcessor> largeMessageMap = new ConcurrentHashMap<>();
 
     static {
         Config config = new Config();

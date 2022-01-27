@@ -13,7 +13,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Executor;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
@@ -27,7 +26,7 @@ import java.util.stream.Collectors;
 public class LargeMessageProcessor extends Thread {
     protected static final Logger LOGGER = LoggerFactory.getLogger(LargeMessageProcessor.class);
 
-    private String hookLabel;
+    private volatile String hookLabel;
 
     private RobotsHookProperties.Robot robot;
 
@@ -62,7 +61,7 @@ public class LargeMessageProcessor extends Thread {
         try {
             messagePool.put(message);
         } catch (InterruptedException e) {
-            LOGGER.error("添加消息异常，{}",e.getMessage());
+            LOGGER.error("添加消息异常，{}", e.getMessage());
         }
         ats.addAll(new HashSet<>(atPhones.size()));
     }
@@ -73,6 +72,7 @@ public class LargeMessageProcessor extends Thread {
     void shutdown() {
         messagePool.clear();
         ats.clear();
+        RobotUtil.largeMessageMap.remove(hookLabel);
         this.shutdown.compareAndSet(false, true);
     }
 
@@ -97,6 +97,7 @@ public class LargeMessageProcessor extends Thread {
 
     private void listener() {
         final Runnable job = () -> {
+            LOGGER.info("add frequently listener [{}]", hookLabel);
             while (!shutdown.get()) {
                 try {
                     Thread.sleep(DEFAULT_CACHE_MESSAGE_TIME);
@@ -114,12 +115,14 @@ public class LargeMessageProcessor extends Thread {
                     request.setAt(at);
                 }
                 RobotSendRequest.Text text = new RobotSendRequest.Text();
-                text.setContent(largeMessage.toString());
+                String msg = largeMessage.toString();
+                text.setContent(msg);
                 request.setText(text);
                 RobotUtil.send(robot, request);
+                // 这里如果直接清空的话 并发情况下会消息丢失
+                largeMessage = largeMessage.delete(0, msg.length());
             }
         };
-
         new Thread(job).start();
     }
 }
