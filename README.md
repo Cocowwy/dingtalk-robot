@@ -13,7 +13,7 @@ cocowwy-dingtalk-start
   - 实现一个消息能被同一个分组内的机器人随机消费，按权重消费（coding...）
 
 配置文件：
-```
+```yml
 dingding:
   robots:
     hooks:
@@ -53,7 +53,7 @@ dingding:
 - **robot** 单聊机器人需要注入**DingTalkRobotApi**来进行使用
 
 ### 使用Demo
-```
+```java
 /**
  * @author cocowwy.cn
  * @create 2021-12-12-10:41
@@ -86,7 +86,7 @@ public class Runner implements ApplicationRunner {
 
 ### 如何引入？
 **将代码clone下来后cd 进 dingtalk-robot-spring-boot-starter 这个项目**
-```
+```shell
 mvn clean install
 ```
 **接着再在/target目录下找到jar包，引入即可...后续会放在maven公有云上**
