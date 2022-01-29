@@ -75,4 +75,13 @@ public class DingTalkGroupApi {
         List<RobotsHookProperties.Robot> robotGroup = RobotUtil.getRobotGroup(label, robotsHookProperties.getHooks());
         RobotUtil.sendFrequentlyMessage(CollectionUtils.lastElement(robotGroup), message, phones);
     }
+
+    /**
+     * 根据传入的webhook和签名，发送指定的群消息
+     * @param webhook
+     * @param signature
+     */
+    public void sendMessage4Customize(String webhook, String signature) {
+
+    }
 }
