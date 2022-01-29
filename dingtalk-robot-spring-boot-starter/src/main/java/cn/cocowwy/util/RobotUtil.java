@@ -26,6 +26,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 import javax.crypto.Mac;
@@ -116,7 +117,8 @@ public class RobotUtil extends StringPool {
      */
     private static List<String> getUserIdsByPhones(RobotsProperties.Robot robot, List<String> phones) {
         List<String> userIds = new ArrayList<>();
-        phones.forEach(phone -> {
+
+        phones.stream().filter(it -> !StringUtils.isEmpty(it)).forEach(phone -> {
             JSONObject getUerId = new JSONObject();
             getUerId.put(MOBILE, phone);
             ResponseEntity<String> getUserId = null;
@@ -173,6 +175,7 @@ public class RobotUtil extends StringPool {
         RobotSendRequest request = new RobotSendRequest();
         request.setMsgtype(TEXT);
         if (null != phones) {
+            phones = phones.stream().filter(it -> !StringUtils.isEmpty(it)).collect(Collectors.toList());
             RobotSendRequest.At at = new RobotSendRequest.At();
             at.setAtMobiles(phones);
             at.setAtAll(Boolean.FALSE);
@@ -194,10 +197,11 @@ public class RobotUtil extends StringPool {
     public synchronized static void sendFrequentlyMessage(RobotsHookProperties.Robot robot, String message, List<String> phones) {
         LargeMessageProcessor processor = largeMessageMap.get(robot.getLabel());
         if (null == processor) {
-            // 必须先判空，直接putIfAbsent依然会产生新的线程
+            // 必须先判空，直接putIfAbsent依然会产生新的线程，因为put前会先new
             largeMessageMap.putIfAbsent(robot.getLabel(), new LargeMessageProcessor(robot));
         }
-        largeMessageMap.get(robot.getLabel()).addMessage(message, phones);
+        largeMessageMap.get(robot.getLabel()).addMessage(message, phones.stream()
+                .filter(it -> !StringUtils.isEmpty(it)).collect(Collectors.toList()));
     }
 
     /**
