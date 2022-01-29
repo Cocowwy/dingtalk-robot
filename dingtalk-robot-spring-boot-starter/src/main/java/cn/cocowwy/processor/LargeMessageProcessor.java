@@ -57,7 +57,6 @@ public class LargeMessageProcessor extends Thread {
      * @param atPhones
      */
     public void addMessage(String message, List<String> atPhones) {
-        System.out.println(message);
         try {
             messagePool.put(message);
         } catch (InterruptedException e) {

@@ -47,7 +47,6 @@ public class RobotUtil extends StringPool {
     private static final RestTemplate restTemplate = new RestTemplate();
     private static TimedCache<String, String> tokenCachePool = CacheUtil.newTimedCache(0L);
     private static Client client = null;
-
     // 机器人hook标识--->该大消息处理器
     public static Map<String, LargeMessageProcessor> largeMessageMap = new ConcurrentHashMap<>();
 
@@ -88,20 +87,10 @@ public class RobotUtil extends StringPool {
         return rsp.getAccessToken();
     }
 
+
     public static void sendMessage2Sb(RobotsProperties.Robot robot, List<String> phones, String message, String title) throws Exception {
         List<String> userIds = getUserIdsByPhones(robot, phones);
-
-        JSONObject msg = new JSONObject();
-        msg.put(TEXT, message);
-        msg.put(TITLE, title);
-        BatchSendOTOHeaders batchSendOTOHeaders = new BatchSendOTOHeaders();
-        batchSendOTOHeaders.xAcsDingtalkAccessToken = getRobotToken(robot, true);
-        BatchSendOTORequest batchSendOTORequest = new BatchSendOTORequest()
-                .setRobotCode(robot.getAppKey())
-                .setUserIds(userIds)
-                .setMsgKey(SAMPLE_MARKDOWN)
-                .setMsgParam(String.valueOf(msg));
-        client.batchSendOTOWithOptions(batchSendOTORequest, batchSendOTOHeaders, new RuntimeOptions());
+        sendMessageByUserIdsAt(robot, userIds, message, title);
     }
 
     public static void sendMessageByUserIdsAt(RobotsProperties.Robot robot, List<String> userids, String message, String title) throws Exception {
@@ -118,8 +107,14 @@ public class RobotUtil extends StringPool {
         client.batchSendOTOWithOptions(batchSendOTORequest, batchSendOTOHeaders, new RuntimeOptions());
     }
 
+
+    /**
+     * 根据手机号获取用户ID
+     * @param robot
+     * @param phones
+     * @return
+     */
     private static List<String> getUserIdsByPhones(RobotsProperties.Robot robot, List<String> phones) {
-        // 根据手机号获取用户的userId
         List<String> userIds = new ArrayList<>();
         phones.forEach(phone -> {
             JSONObject getUerId = new JSONObject();
@@ -137,6 +132,12 @@ public class RobotUtil extends StringPool {
         return userIds;
     }
 
+    /**
+     * 根据label获取群消息机器人
+     * @param label
+     * @param robots
+     * @return
+     */
     public static List<RobotsHookProperties.Robot> getRobotGroup(String label, List<RobotsHookProperties.Robot> robots) {
         List<RobotsHookProperties.Robot> robotGroup = robots.stream()
                 .filter(robot -> robot.getLabel().equals(label)).collect(Collectors.toList());
@@ -146,6 +147,13 @@ public class RobotUtil extends StringPool {
         return robotGroup;
     }
 
+    /**
+     * 根据label获取机器人
+     * @param label
+     * @param robots
+     * @return
+     * @throws RobotException
+     */
     public static List<RobotsProperties.Robot> getRobot(String label, List<RobotsProperties.Robot> robots) throws RobotException {
         List<RobotsProperties.Robot> robot = robots.stream()
                 .filter(r -> r.getLabel().equals(label)).collect(Collectors.toList());
@@ -177,16 +185,16 @@ public class RobotUtil extends StringPool {
     }
 
     /**
-     * 频繁发送消息
+     *  频繁的发送消息，自动拼接
      *  - 用于解决钉钉机器人1min20条消息的限制
      * @param robot
      * @param message
      * @param phones
      */
     public synchronized static void sendFrequentlyMessage(RobotsHookProperties.Robot robot, String message, List<String> phones) {
-
         LargeMessageProcessor processor = largeMessageMap.get(robot.getLabel());
-        if (null == processor){
+        if (null == processor) {
+            // 必须先判空，直接putIfAbsent依然会产生新的线程
             largeMessageMap.putIfAbsent(robot.getLabel(), new LargeMessageProcessor(robot));
         }
         largeMessageMap.get(robot.getLabel()).addMessage(message, phones);
@@ -197,6 +205,7 @@ public class RobotUtil extends StringPool {
      * @param robot
      * @param message
      */
+    @Deprecated
     public static void sendHookMessageAtAll(RobotsHookProperties.Robot robot, String message) {
         RobotSendRequest request = new RobotSendRequest();
         request.setMsgtype(TEXT);
@@ -210,6 +219,12 @@ public class RobotUtil extends StringPool {
         send(robot, request);
     }
 
+    /**
+     * 获取签名
+     * @param robot
+     * @param timestamp
+     * @return
+     */
     private static String obtainSign(RobotsHookProperties.Robot robot, Long timestamp) {
         String stringToSign = timestamp + "\n" + robot.getSignature();
         Mac mac;
