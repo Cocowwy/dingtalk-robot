@@ -5,6 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
 
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+
     <groupId>cn.cocowwy</groupId>
     <artifactId>cocowwy-dingtalk-robot</artifactId>
     <version>1.0.11-SNAPSHOT</version>
@@ -51,6 +57,24 @@
             <version>5.7.17</version>
         </dependency>
     </dependencies>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <scm>
+        <url>https://github.com/Cocowwy/dingtalk-robot.git</url>
+    </scm>
+    <developers>
+        <developer>
+            <name>Cocowwy</name>
+            <email>514658459@qq.com</email>
+            <organization>cn.cocowwy</organization>
+        </developer>
+    </developers>
 
     <build>
         <plugins>
