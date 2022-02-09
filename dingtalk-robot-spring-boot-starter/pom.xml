@@ -66,7 +66,10 @@
         </license>
     </licenses>
     <scm>
+        <tag>master</tag>
         <url>https://github.com/Cocowwy/dingtalk-robot.git</url>
+        <connection>scm:git:git@github.com:Cocowwy/dingtalk-robot.git</connection>
+        <developerConnection>scm:git:git@github.com:Cocowwy/dingtalk-robot.git</developerConnection>
     </scm>
     <developers>
         <developer>
