@@ -106,7 +106,7 @@ mvn clean install
 <dependency>
     <groupId>cn.cocowwy</groupId>
     <artifactId>dingtalk-robot-cocowwy</artifactId>
-    <version>1.0.11-SNAPSHOT</version>
+    <version>1.0.12-SNAPSHOT</version>
 </dependency>
 ```
 
