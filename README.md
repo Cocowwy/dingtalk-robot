@@ -84,6 +84,18 @@ public class Runner implements ApplicationRunner {
 }
 ```
 
+- DingTalkGroupApi
+   - getHooks 获取所有在线的群机器人label
+   - sendText 向指定label的群机器人发送消息
+   - sendTextByPhones 向指定label的群机器人发送消息，并且根据手机号@
+   - sendTextAndAtAll 向指定群机器人发送消息，并且@所有人
+   - sendFrequentlyMessage 解决群机器人1分钟的20条消息限制，该接口会在短时间内的消息自动拼接成长消息，默认缓存拼接时间为10s
+- DingTalkRobotApi
+   - getRobots 获取单聊机器人列表
+   - sendMessageByPhonesAt 根据手机号向指定人发送消息
+   - sendMessageByUserIdsAt 根据用户id给指定人发送消息
+   - getToken 查询指定机器人的token
+
 ### 如何引入？
 **将代码clone下来后cd 进 dingtalk-robot-spring-boot-starter 这个项目**
 ```shell
