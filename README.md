@@ -1,7 +1,6 @@
 # cocowwy-dingtalk-robot
 cocowwy-dingtalk-start
-钉钉机器人
-目前实现功能
+钉钉机器
 - **群机器人**
   - 对钉钉群引入的机器人进行管理，可根据业务统一调度不同群的机器人发送消息
   - 在上述功能的基础上，实现根据手机号@指定人员
@@ -11,6 +10,18 @@ cocowwy-dingtalk-start
   - 对多个单聊机器人进行统一的管理，可细粒度的控制不同机器人根据手机号发送消息
   - 对token进行自定义缓存时间，调用方可以无需考虑钉钉开放平台对token获取接口的限流，api会自动对token进行自定义时长的缓存
   - 实现一个消息能被同一个分组内的机器人随机消费，按权重消费（coding...）
+  - 
+- DingTalkGroupApi
+   - getHooks 获取所有在线的群机器人label
+   - sendText 向指定label的群机器人发送消息
+   - sendTextByPhones 向指定label的群机器人发送消息，并且根据手机号@
+   - sendTextAndAtAll 向指定群机器人发送消息，并且@所有人
+   - sendFrequentlyMessage 解决群机器人1分钟的20条消息限制，该接口会在短时间内的消息自动拼接成长消息，默认缓存拼接时间为10s
+- DingTalkRobotApi
+   - getRobots 获取单聊机器人列表
+   - sendMessageByPhonesAt 根据手机号向指定人发送消息
+   - sendMessageByUserIdsAt 根据用户id给指定人发送消息
+   - getToken 查询指定机器人的token
 
 配置文件：
 ```yml
@@ -83,18 +94,6 @@ public class Runner implements ApplicationRunner {
     }
 }
 ```
-
-- DingTalkGroupApi
-   - getHooks 获取所有在线的群机器人label
-   - sendText 向指定label的群机器人发送消息
-   - sendTextByPhones 向指定label的群机器人发送消息，并且根据手机号@
-   - sendTextAndAtAll 向指定群机器人发送消息，并且@所有人
-   - sendFrequentlyMessage 解决群机器人1分钟的20条消息限制，该接口会在短时间内的消息自动拼接成长消息，默认缓存拼接时间为10s
-- DingTalkRobotApi
-   - getRobots 获取单聊机器人列表
-   - sendMessageByPhonesAt 根据手机号向指定人发送消息
-   - sendMessageByUserIdsAt 根据用户id给指定人发送消息
-   - getToken 查询指定机器人的token
 
 ### 如何引入？
 **将代码clone下来后cd 进 dingtalk-robot-spring-boot-starter 这个项目**
