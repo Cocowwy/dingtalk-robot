@@ -2,6 +2,7 @@ package cn.cocowwy.config;
 
 import cn.cocowwy.dingtalk.DingTalkGroupApi;
 import cn.cocowwy.dingtalk.DingTalkRobotApi;
+import cn.cocowwy.util.SpringUtil;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,5 +23,10 @@ public class DingtalkRobotAutoConfiguration {
     @Bean
     public DingTalkRobotApi dingTalkRobotApi() {
         return new DingTalkRobotApi();
+    }
+
+    @Bean
+    public SpringUtil spiringUtil(){
+        return new SpringUtil();
     }
 }

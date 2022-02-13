@@ -36,6 +36,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -108,6 +109,17 @@ public class RobotUtil extends StringPool {
         client.batchSendOTOWithOptions(batchSendOTORequest, batchSendOTOHeaders, new RuntimeOptions());
     }
 
+    /**
+     * 向指定群机器人发送消息
+     * send message to dingding group
+     * @param label 机器人 Label
+     * @param message  文本消息体
+     * @return
+     */
+    public static void sendText(String label, String message, List<String> phones) throws Exception {
+        List<RobotsHookProperties.Robot> robotGroup = RobotUtil.getRobotGroup(label, SpringUtil.getBean(RobotsHookProperties.class).getHooks());
+        RobotUtil.sendHookMessage(CollectionUtils.lastElement(robotGroup), message, phones);
+    }
 
     /**
      * 根据手机号获取用户ID
@@ -197,11 +209,12 @@ public class RobotUtil extends StringPool {
     public synchronized static void sendFrequentlyMessage(RobotsHookProperties.Robot robot, String message, List<String> phones) {
         LargeMessageProcessor processor = largeMessageMap.get(robot.getLabel());
         if (null == processor) {
-            // 必须先判空，直接putIfAbsent依然会产生新的线程，因为put前会先new
+            // 必须先判空，直接putIfAbsent依然会产生新的线程，因为put前会先new LargeMessageProcessor
             largeMessageMap.putIfAbsent(robot.getLabel(), new LargeMessageProcessor(robot));
         }
-        largeMessageMap.get(robot.getLabel()).addMessage(message, phones.stream()
-                .filter(it -> !StringUtils.isEmpty(it)).collect(Collectors.toList()));
+        largeMessageMap.get(robot.getLabel()).addMessage(message,
+                Optional.ofNullable(phones).
+                        orElse(new ArrayList<>()).stream().filter(it -> !StringUtils.isEmpty(it)).collect(Collectors.toList()));
     }
 
     /**
@@ -220,6 +233,18 @@ public class RobotUtil extends StringPool {
         text.setContent(message);
         request.setText(text);
         send(robot, request);
+    }
+
+    public static void sendMessageByCustomHook(String webhook, String signature, String message, Boolean atAll, List<String> phones) throws Exception {
+        RobotsHookProperties.Robot robot = new RobotsHookProperties.Robot();
+        robot.setSignature(signature);
+        robot.setWebhook(webhook);
+
+        if (atAll == null || !atAll) {
+            sendHookMessage(robot, message, phones);
+        } else {
+            sendHookMessageAtAll(robot, message);
+        }
     }
 
     /**
@@ -244,7 +269,7 @@ public class RobotUtil extends StringPool {
         return sign;
     }
 
-    public static void send(RobotsHookProperties.Robot robot, RobotSendRequest request) throws Exception{
+    public static void send(RobotsHookProperties.Robot robot, RobotSendRequest request) throws Exception {
         Long timestamp = System.currentTimeMillis();
         String sign = obtainSign(robot, timestamp);
         String endpoint = String.format(robot.getWebhook() + URL_SUFFIX, timestamp, sign);

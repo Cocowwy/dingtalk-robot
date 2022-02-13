@@ -70,6 +70,9 @@ public class DingTalkGroupApi {
      *    如gapTime=10s
      *  - 消息结尾进行进行两次斜杠n操作来区分单个消息
      *  - 多次at人的话，会将at整合
+     *
+     *  if you want to send frequently message (1min > 20 times), you can use this way
+     *
      * @param label 机器人的唯一标识
      * @param message 消息
      */
@@ -78,12 +81,16 @@ public class DingTalkGroupApi {
         RobotUtil.sendFrequentlyMessage(CollectionUtils.lastElement(robotGroup), message, phones);
     }
 
+
     /**
-     * 根据传入的webhook和签名，发送指定的群消息
+     * 根据传入的webhook和签名，向指定群发送消息
      * @param webhook
      * @param signature
+     * @param message
+     * @param atAll 是否@所有人
+     * @param phones 根据指定手机号@，可传空
      */
-    public void sendMessage4Customize(String webhook, String signature) {
-
+    public void sendMessageByCustomHook(String webhook, String signature, String message, Boolean atAll, List<String> phones) throws Exception {
+        RobotUtil.sendMessageByCustomHook( webhook,  signature,  message,  atAll, phones);
     }
 }
