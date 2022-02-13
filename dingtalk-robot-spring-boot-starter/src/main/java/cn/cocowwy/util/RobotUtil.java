@@ -48,7 +48,7 @@ public class RobotUtil extends StringPool {
     private static final RestTemplate restTemplate = new RestTemplate();
     private static TimedCache<String, String> tokenCachePool = CacheUtil.newTimedCache(0L);
     private static Client client = null;
-    // 机器人hook标识--->该大消息处理器
+    // 机器人hook标识--->消息处理器
     public static Map<String, LargeMessageProcessor> largeMessageMap = new ConcurrentHashMap<>();
 
     static {
@@ -171,7 +171,7 @@ public class RobotUtil extends StringPool {
      * @param message
      * @param phones
      */
-    public static void sendHookMessage(RobotsHookProperties.Robot robot, String message, List<String> phones) {
+    public static void sendHookMessage(RobotsHookProperties.Robot robot, String message, List<String> phones) throws Exception {
         RobotSendRequest request = new RobotSendRequest();
         request.setMsgtype(TEXT);
         if (null != phones) {
@@ -209,13 +209,12 @@ public class RobotUtil extends StringPool {
      * @param robot
      * @param message
      */
-    @Deprecated
-    public static void sendHookMessageAtAll(RobotsHookProperties.Robot robot, String message) {
+    public static void sendHookMessageAtAll(RobotsHookProperties.Robot robot, String message) throws Exception {
         RobotSendRequest request = new RobotSendRequest();
         request.setMsgtype(TEXT);
         RobotSendRequest.At at = new RobotSendRequest.At();
         at.setAtAll(true);
-        at.setAtMobiles(null);
+        at.setAtMobiles(new ArrayList<>());
         request.setAt(at);
         RobotSendRequest.Text text = new RobotSendRequest.Text();
         text.setContent(message);
@@ -245,7 +244,7 @@ public class RobotUtil extends StringPool {
         return sign;
     }
 
-    public static void send(RobotsHookProperties.Robot robot, RobotSendRequest request) {
+    public static void send(RobotsHookProperties.Robot robot, RobotSendRequest request) throws Exception{
         Long timestamp = System.currentTimeMillis();
         String sign = obtainSign(robot, timestamp);
         String endpoint = String.format(robot.getWebhook() + URL_SUFFIX, timestamp, sign);
@@ -255,8 +254,7 @@ public class RobotUtil extends StringPool {
 
         ResponseEntity<String> response = restTemplate.postForEntity(endpoint, httpEntity, String.class);
         if (response.getStatusCode() != HttpStatus.OK
-                || JSONObject.parseObject(response.getBody(), RobotSendResponse.class).getErrcode() != 0) {
-            logger.error("failed to send dingding message, response：" + response.getBody());
-        }
+                || JSONObject.parseObject(response.getBody(), RobotSendResponse.class).getErrcode() != 0)
+            throw new RobotException("failed to send dingding message, response：" + response.getBody());
     }
 }

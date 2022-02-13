@@ -117,7 +117,12 @@ public class LargeMessageProcessor extends Thread {
                 String msg = largeMessage.toString();
                 text.setContent(msg);
                 request.setText(text);
-                RobotUtil.send(robot, request);
+                try {
+                    RobotUtil.send(robot, request);
+                } catch (Exception e) {
+                    // ignore..
+                    LOGGER.error("send frequently message error ,{}", e.getMessage());
+                }
                 // 这里如果直接清空的话 并发情况下会消息丢失
                 largeMessage = largeMessage.delete(0, msg.length());
             }

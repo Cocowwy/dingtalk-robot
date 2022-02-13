@@ -11,7 +11,8 @@ import java.util.stream.Collectors;
 
 /**
  * 群机器人API---钉钉通过webhook接入
- * 群机器人有消息限制 1min 20条
+ * 群机器人有消息限制 1min 20条 ,
+ * 如果需要发送超过限制的消息，请使用 {@link cn.cocowwy.dingtalk.DingTalkGroupApi#sendFrequentlyMessage}
  * @author Cocowwy
  * @since 2021/6/8
  */
@@ -21,7 +22,8 @@ public class DingTalkGroupApi {
     private RobotsHookProperties robotsHookProperties;
 
     /**
-     * 获取单聊机器人列表
+     * 获取可发送消息的群机器任标签列表
+     * get dingding group's robots list
      * @return
      */
     public List<String> getHooks() {
@@ -29,35 +31,35 @@ public class DingTalkGroupApi {
     }
 
     /**
-     * 向指定 Label 的群机器人发送群消息
-     *
+     * 向指定群机器人发送消息
+     * send message to dingding group
      * @param label 机器人 Label
      * @param message  文本消息体
      * @return
      */
-    public void sendText(String label, String message) {
+    public void sendText(String label, String message) throws Exception {
         List<RobotsHookProperties.Robot> robotGroup = RobotUtil.getRobotGroup(label, robotsHookProperties.getHooks());
         RobotUtil.sendHookMessageAtAll(CollectionUtils.lastElement(robotGroup), message);
     }
 
     /**
-     * 向指定 Label 的群机器人发送群消息，并且根据手机号@人员
-     *
+     * 向指定群机器人发送消息，并且根据手机号@
+     * send messsage to dingding group and @ sb. by phones
      * @param label
-     * @param phones
+     * @param phones 可传null
      */
-    public void sendTextAndAt(String label, String message, List<String> phones) {
+    public void sendTextByPhones(String label, String message, List<String> phones) throws Exception {
         List<RobotsHookProperties.Robot> robotGroup = RobotUtil.getRobotGroup(label, robotsHookProperties.getHooks());
         RobotUtil.sendHookMessage(CollectionUtils.lastElement(robotGroup), message, phones);
     }
 
     /**
-     * 向指定 Label 的群机器人发送群消息，并且@所有人
+     * 向指定群机器人发送消息，并且@所有人
+     * send message to dingding group and at @ all
      *
      * @param label
      */
-    @Deprecated
-    public void sendTextAndAtAll(String label, String message) {
+    public void sendTextAndAtAll(String label, String message) throws Exception {
         List<RobotsHookProperties.Robot> robotGroup = RobotUtil.getRobotGroup(label, robotsHookProperties.getHooks());
         RobotUtil.sendHookMessageAtAll(CollectionUtils.lastElement(robotGroup), message);
     }

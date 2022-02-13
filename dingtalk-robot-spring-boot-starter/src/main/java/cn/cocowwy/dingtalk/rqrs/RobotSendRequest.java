@@ -1,6 +1,8 @@
 package cn.cocowwy.dingtalk.rqrs;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 /**
@@ -26,6 +28,7 @@ public class RobotSendRequest {
 
     public static class At {
         private List<String> atMobiles;
+        @JsonProperty("isAtAll")
         private Boolean isAtAll;
 
         public List<String> getAtMobiles() {
