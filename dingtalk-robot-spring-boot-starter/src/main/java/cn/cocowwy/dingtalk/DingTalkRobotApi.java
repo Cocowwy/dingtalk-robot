@@ -40,17 +40,10 @@ public class DingTalkRobotApi {
      * @param message 消息
      * @param title 标题
      */
-    public void sendMessageByPhonesAt(String label, List<String> phones, String message, String title) {
-        try {
-            List<RobotsProperties.Robot> robots = RobotUtil.getRobot(label, robotsProperties.getRobot());
-            RobotsProperties.Robot robot = CollectionUtils.lastElement(robots);
-            RobotUtil.sendMessage2Sb(robot, phones, message, title);
-        } catch (RobotException e) {
-            // ignore..
-            logger.error("RobotException exception  ：", e);
-        } catch (Exception e) {
-            logger.error("error" + e);
-        }
+    public void sendMessageByPhonesAt(String label, List<String> phones, String message, String title) throws Exception {
+        List<RobotsProperties.Robot> robots = RobotUtil.getRobot(label, robotsProperties.getRobot());
+        RobotsProperties.Robot robot = CollectionUtils.lastElement(robots);
+        RobotUtil.sendMessage2Sb(robot, phones, message, title);
     }
 
     /**
@@ -60,17 +53,10 @@ public class DingTalkRobotApi {
      * @param message 消息
      * @param title 标题
      */
-    public void sendMessageByUserIdsAt(String label, List<String> userids, String message, String title) {
-        try {
-            List<RobotsProperties.Robot> robots = RobotUtil.getRobot(label, robotsProperties.getRobot());
-            RobotsProperties.Robot robot = CollectionUtils.lastElement(robots);
-            RobotUtil.sendMessageByUserIdsAt(robot, userids, message, title);
-        } catch (RobotException e) {
-            // ignore..
-            logger.error("RobotException exception  ：", e);
-        } catch (Exception e) {
-            logger.error("error" + e);
-        }
+    public void sendMessageByUserIdsAt(String label, List<String> userids, String message, String title) throws Exception {
+        List<RobotsProperties.Robot> robots = RobotUtil.getRobot(label, robotsProperties.getRobot());
+        RobotsProperties.Robot robot = CollectionUtils.lastElement(robots);
+        RobotUtil.sendMessageByUserIdsAt(robot, userids, message, title);
     }
 
     /**
@@ -78,13 +64,8 @@ public class DingTalkRobotApi {
      * @param label 机器人标识
      * @param useCache 是否走缓存，默认走
      */
-    public String getToken(String label, Boolean useCache) {
+    public String getToken(String label, Boolean useCache) throws ApiException {
         List<RobotsProperties.Robot> robots = RobotUtil.getRobot(label, robotsProperties.getRobot());
-        try {
-            return RobotUtil.getRobotToken(CollectionUtils.lastElement(robots), Optional.ofNullable(useCache).orElse(true));
-        } catch (RobotException | ApiException e) {
-            logger.error("error" + e);
-            return StrUtil.EMPTY;
-        }
+        return RobotUtil.getRobotToken(CollectionUtils.lastElement(robots), Optional.ofNullable(useCache).orElse(true));
     }
 }
