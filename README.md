@@ -1,5 +1,8 @@
 # cocowwy-dingtalk-robot
 cocowwy-dingtalk-starter
+
+![image](https://user-images.githubusercontent.com/63331147/153790868-79936b70-7008-484b-a749-dac3f304d257.png)
+
 钉钉机器
 - **群机器人**
   - 对钉钉群引入的机器人进行管理，可根据业务统一调度不同群的机器人发送消息
