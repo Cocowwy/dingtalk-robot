@@ -1,6 +1,6 @@
 # cocowwy-dingtalk-robot
-cocowwy-dingtalk-starter:
-您可以使用它，**拆箱即用，以便更灵活的将钉钉机器人嵌入到业务里，用来应付在复杂场景里对不同业务类型的机器人的指定使用，同时提供一些应付更复杂的业务场景的功能**  
+cocowwy-dingtalk-starter:  
+您可以使用它，**拆箱即用，以便更灵活的将钉钉机器人嵌入到业务里，用来应付在复杂场景里对不同业务类型的机器人的指定使用，同时会提供一些应付更复杂的业务场景的功能**  
 
 ![image](https://user-images.githubusercontent.com/63331147/153790868-79936b70-7008-484b-a749-dac3f304d257.png)
 
