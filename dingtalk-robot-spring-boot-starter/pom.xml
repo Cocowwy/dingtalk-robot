@@ -13,7 +13,7 @@
 
     <groupId>cn.cocowwy</groupId>
     <artifactId>cocowwy-dingtalk-robot</artifactId>
-    <version>1.0.12-SNAPSHOT</version>
+    <version>1.0.0-RELEASE</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -50,6 +50,12 @@
             <groupId>com.aliyun</groupId>
             <artifactId>alibaba-dingtalk-service-sdk</artifactId>
             <version>1.0.1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jms</artifactId>
+                    <groupId>javax.jms</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>cn.hutool</groupId>
@@ -78,7 +84,18 @@
             <organization>cn.cocowwy</organization>
         </developer>
     </developers>
-
+    <distributionManagement>
+        <repository>
+            <id>release</id>
+            <name>dingtalk-robot-1.0.0-RELEASE</name>
+            <url>https://s01.oss.sonatype.org/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>dingtalk-robot-1.0.0-SNAPSHOTS</name>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
     <build>
         <plugins>
             <plugin>
@@ -91,4 +108,7 @@
         </plugins>
         <finalName>${project.artifactId}-${version}</finalName>
     </build>
+
+
+
 </project>
