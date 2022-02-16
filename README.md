@@ -1,7 +1,16 @@
 # cocowwy-dingtalk-robot
 <a href="https://github.com/Cocowwy/dingtalk-robot"><img src="https://badgen.net/badge/⭐/GitHub/blue" alt="github"></a>
 
-cocowwy-dingtalk-starter:  
+引入方式：
+```
+<dependency>
+  <groupId>cn.cocowwy</groupId>
+  <artifactId>cocowwy-dingtalk-robot</artifactId>
+  <version>1.0.0-RELEASE</version>
+</dependency>
+```
+
+**cocowwy-dingtalk-starter:  **
 您可以使用它，**拆箱即用，以便更灵活的将钉钉机器人嵌入到业务里，用来应付在复杂场景里对不同业务类型的机器人的指定使用，同时会提供一些应付更复杂的业务场景的功能**  
 
 ![image](https://user-images.githubusercontent.com/63331147/153790868-79936b70-7008-484b-a749-dac3f304d257.png)
@@ -100,20 +109,3 @@ public class Runner implements ApplicationRunner {
     }
 }
 ```
-
-### 如何引入？
-**将代码clone下来后cd 进 dingtalk-robot-spring-boot-starter 这个项目**
-```shell
-mvn clean install
-```
-**接着再在/target目录下找到jar包，引入即可...后续会放在maven公有云上**
-
-```
-<dependency>
-    <groupId>cn.cocowwy</groupId>
-    <artifactId>dingtalk-robot-cocowwy</artifactId>
-    <version>1.0.12-SNAPSHOT</version>
-</dependency>
-```
-
-
