@@ -39,7 +39,7 @@ public class DingTalkGroupApi {
      */
     public void sendText(String label, String message) throws Exception {
         List<RobotsHookProperties.Robot> robotGroup = RobotUtil.getRobotGroup(label, robotsHookProperties.getHooks());
-        RobotUtil.sendHookMessageAtAll(CollectionUtils.lastElement(robotGroup), message);
+        RobotUtil.sendHookMessage(CollectionUtils.lastElement(robotGroup), message, null);
     }
 
     /**
@@ -91,6 +91,6 @@ public class DingTalkGroupApi {
      * @param phones 根据指定手机号@，可传空
      */
     public void sendMessageByCustomHook(String webhook, String signature, String message, Boolean atAll, List<String> phones) throws Exception {
-        RobotUtil.sendMessageByCustomHook( webhook,  signature,  message,  atAll, phones);
+        RobotUtil.sendMessageByCustomHook(webhook, signature, message, atAll, phones);
     }
 }
