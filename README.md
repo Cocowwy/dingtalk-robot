@@ -6,7 +6,7 @@
 <dependency>
   <groupId>cn.cocowwy</groupId>
   <artifactId>cocowwy-dingtalk-robot</artifactId>
-  <version>1.0.0-RELEASE</version>
+  <version>1.0.1-RELEASE</version>
 </dependency>
 ```
 
