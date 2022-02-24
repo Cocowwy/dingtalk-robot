@@ -186,13 +186,13 @@ public class RobotUtil extends StringPool {
     public static void sendHookMessage(RobotsHookProperties.Robot robot, String message, List<String> phones) throws Exception {
         RobotSendRequest request = new RobotSendRequest();
         request.setMsgtype(TEXT);
+        RobotSendRequest.At at = new RobotSendRequest.At();
         if (null != phones) {
             phones = phones.stream().filter(it -> !StringUtils.isEmpty(it)).collect(Collectors.toList());
-            RobotSendRequest.At at = new RobotSendRequest.At();
             at.setAtMobiles(phones);
-            at.setAtAll(Boolean.FALSE);
             request.setAt(at);
         }
+        at.setAtAll(Boolean.FALSE);
         RobotSendRequest.Text text = new RobotSendRequest.Text();
         text.setContent(message);
         request.setText(text);
