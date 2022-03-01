@@ -25,6 +25,7 @@ cocowwy-dingtalk-starter:
   - 对多个单聊机器人进行统一的管理，可细粒度的控制不同机器人根据手机号发送消息
   - 对token进行自定义缓存时间，调用方可以无需考虑钉钉开放平台对token获取接口的限流，api会自动对token进行自定义时长的缓存
   - 实现一个消息能被同一个分组内的机器人随机消费，按权重消费（coding...）
+  - 发送带有link链接的单聊机器人
 
 - DingTalkGroupApi
    - getHooks 获取所有在线的群机器人label
