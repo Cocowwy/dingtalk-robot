@@ -10,15 +10,7 @@ import org.springframework.stereotype.Component;
  * @author cocowwy.cn
  * @create 2022-02-02-16:18
  */
-@Component
 public class SpringUtil implements ApplicationContextAware {
-    @Autowired
-    private SpringUtil springUtil;
-
-    public void setSpringUtil(SpringUtil springUtil) {
-        this.springUtil = springUtil;
-    }
-
     private static ApplicationContext applicationContext;
 
     @Override
