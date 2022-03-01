@@ -6,6 +6,7 @@ import cn.cocowwy.util.SpringUtil;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 
 /**
  * @author cocowwy.cn
@@ -26,6 +27,7 @@ public class DingtalkRobotAutoConfiguration {
     }
 
     @Bean
+    @Order(Integer.MAX_VALUE)
     public SpringUtil spiringUtil() {
         return new SpringUtil();
     }
