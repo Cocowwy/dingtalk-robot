@@ -1,15 +1,23 @@
 package cn.cocowwy.util;
 
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
  * @author cocowwy.cn
  * @create 2022-02-02-16:18
  */
+@Component
 public class SpringUtil implements ApplicationContextAware {
+    @Autowired
+    private SpringUtil springUtil;
+
+    public void setSpringUtil(SpringUtil springUtil) {
+        this.springUtil = springUtil;
+    }
 
     private static ApplicationContext applicationContext;
 
