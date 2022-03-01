@@ -3,6 +3,7 @@ package cn.cocowwy.util;
 import cn.cocowwy.config.RobotsHookProperties;
 import cn.cocowwy.config.RobotsProperties;
 import cn.cocowwy.constant.MessageTypeEnum;
+import cn.cocowwy.dingtalk.rqrs.RobotLinkMessage;
 import cn.cocowwy.dingtalk.rqrs.RobotSendRequest;
 import cn.cocowwy.dingtalk.rqrs.RobotSendResponse;
 import cn.cocowwy.processor.LargeMessageProcessor;
@@ -62,6 +63,9 @@ public class RobotUtil extends StringPool {
         }
     }
 
+    /**
+     * 获取机器人的token
+     */
     public static String getRobotToken(RobotsProperties.Robot robot, Boolean useCache) throws ApiException {
         String token = null;
         if (useCache) {
@@ -122,7 +126,6 @@ public class RobotUtil extends StringPool {
                 .setMsgParam(String.valueOf(msg));
         client.batchSendOTOWithOptions(batchSendOTORequest, batchSendOTOHeaders, new RuntimeOptions());
     }
-
 
     /**
      * 向指定群机器人发送消息
@@ -254,7 +257,7 @@ public class RobotUtil extends StringPool {
      * 发送链接消息
      */
     public static void sendLinkMessageByPhone(RobotsProperties.Robot robot, String phone, String title, String text, String messageUrl, String picUrl) throws Exception {
-        RobotSendRequest.Link link = new RobotSendRequest.Link();
+        RobotLinkMessage link = new RobotLinkMessage();
         link.setTitle(title);
         link.setText(text);
         link.setPicUrl(picUrl);

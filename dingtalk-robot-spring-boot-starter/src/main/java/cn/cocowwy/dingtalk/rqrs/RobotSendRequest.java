@@ -13,7 +13,6 @@ public class RobotSendRequest {
     private String msgtype;
     private Text text;
     private At at;
-    private Link link;
 
 
     public static class Text {
@@ -50,45 +49,6 @@ public class RobotSendRequest {
         }
     }
 
-    public static  class Link{
-        private String text;
-        private String title;
-        private String picUrl;
-        private String messageUrl;
-
-        public String getText() {
-            return text;
-        }
-
-        public void setText(String text) {
-            this.text = text;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getPicUrl() {
-            return picUrl;
-        }
-
-        public void setPicUrl(String picUrl) {
-            this.picUrl = picUrl;
-        }
-
-        public String getMessageUrl() {
-            return messageUrl;
-        }
-
-        public void setMessageUrl(String messageUrl) {
-            this.messageUrl = messageUrl;
-        }
-    }
-
     public String getMsgtype() {
         return msgtype;
     }
@@ -112,13 +72,4 @@ public class RobotSendRequest {
     public void setAt(At at) {
         this.at = at;
     }
-
-    public Link getLink() {
-        return link;
-    }
-
-    public void setLink(Link link) {
-        this.link = link;
-    }
-
 }

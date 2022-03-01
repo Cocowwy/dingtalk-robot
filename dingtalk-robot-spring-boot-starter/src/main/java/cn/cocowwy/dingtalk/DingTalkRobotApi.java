@@ -72,11 +72,10 @@ public class DingTalkRobotApi {
         RobotUtil.sendLinkMessageByPhone(robot, phone, title, text, messageUrl, picUrl);
     }
 
-
     /**
      * 查询指定机器人的token
      * @param label 机器人标识
-     * @param useCache 是否走缓存，默认走
+     * @param useCache 是否走缓存，默认true
      */
     public String getToken(String label, Boolean useCache) throws ApiException {
         List<RobotsProperties.Robot> robots = RobotUtil.getRobot(label, robotsProperties.getRobot());
