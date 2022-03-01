@@ -1,9 +1,7 @@
 package cn.cocowwy.dingtalk;
 
 import cn.cocowwy.config.RobotsProperties;
-import cn.cocowwy.util.RobotException;
 import cn.cocowwy.util.RobotUtil;
-import cn.hutool.core.util.StrUtil;
 import com.taobao.api.ApiException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -40,7 +38,7 @@ public class DingTalkRobotApi {
      * @param message 消息
      * @param title 标题
      */
-    public void sendMessageByPhonesAt(String label, List<String> phones, String message, String title) throws Exception {
+    public void sendMessageByPhones(String label, List<String> phones, String message, String title) throws Exception {
         List<RobotsProperties.Robot> robots = RobotUtil.getRobot(label, robotsProperties.getRobot());
         RobotsProperties.Robot robot = CollectionUtils.lastElement(robots);
         RobotUtil.sendMessage2Sb(robot, phones, message, title);
@@ -53,11 +51,27 @@ public class DingTalkRobotApi {
      * @param message 消息
      * @param title 标题
      */
-    public void sendMessageByUserIdsAt(String label, List<String> userids, String message, String title) throws Exception {
+    public void sendMessageByUserIds(String label, List<String> userids, String message, String title) throws Exception {
         List<RobotsProperties.Robot> robots = RobotUtil.getRobot(label, robotsProperties.getRobot());
         RobotsProperties.Robot robot = CollectionUtils.lastElement(robots);
-        RobotUtil.sendMessageByUserIdsAt(robot, userids, message, title);
+        RobotUtil.sendMessageByUserIds(robot, userids, message, title);
     }
+
+    /**
+     * 根据手机号发送Link消息
+     * @param label 机器人标识
+     * @param title 消息标题
+     * @param phone 手机号
+     * @param text 消息体
+     * @param messageUrl 点击消息跳转的URL
+     * @param picUrl 图片URL
+     */
+    public void sendLinkMessageByPhones(String label, String phone, String title, String text, String messageUrl, String picUrl) throws Exception {
+        List<RobotsProperties.Robot> robots = RobotUtil.getRobot(label, robotsProperties.getRobot());
+        RobotsProperties.Robot robot = CollectionUtils.lastElement(robots);
+        RobotUtil.sendLinkMessageByPhone(robot, phone, title, text, messageUrl, picUrl);
+    }
+
 
     /**
      * 查询指定机器人的token

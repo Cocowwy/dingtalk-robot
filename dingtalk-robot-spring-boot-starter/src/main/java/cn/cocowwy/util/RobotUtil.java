@@ -2,6 +2,7 @@ package cn.cocowwy.util;
 
 import cn.cocowwy.config.RobotsHookProperties;
 import cn.cocowwy.config.RobotsProperties;
+import cn.cocowwy.constant.MessageTypeEnum;
 import cn.cocowwy.dingtalk.rqrs.RobotSendRequest;
 import cn.cocowwy.dingtalk.rqrs.RobotSendResponse;
 import cn.cocowwy.processor.LargeMessageProcessor;
@@ -16,6 +17,7 @@ import com.aliyun.teautil.models.RuntimeOptions;
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
 import com.dingtalk.api.request.OapiGettokenRequest;
+import com.dingtalk.api.request.OapiRobotSendRequest;
 import com.dingtalk.api.response.OapiGettokenResponse;
 import com.taobao.api.ApiException;
 import org.apache.commons.logging.Log;
@@ -33,10 +35,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -89,15 +88,30 @@ public class RobotUtil extends StringPool {
         return rsp.getAccessToken();
     }
 
-
+    /**
+     * 根据手机号发送消息
+     * @param robot
+     * @param phones
+     * @param message
+     * @param title
+     * @throws Exception
+     */
     public static void sendMessage2Sb(RobotsProperties.Robot robot, List<String> phones, String message, String title) throws Exception {
         List<String> userIds = getUserIdsByPhones(robot, phones);
-        sendMessageByUserIdsAt(robot, userIds, message, title);
+        sendMessageByUserIds(robot, userIds, message, title);
     }
 
-    public static void sendMessageByUserIdsAt(RobotsProperties.Robot robot, List<String> userids, String message, String title) throws Exception {
+    /**
+     * 根据userId发送
+     * @param robot
+     * @param userids
+     * @param message
+     * @param title
+     * @throws Exception
+     */
+    public static void sendMessageByUserIds(RobotsProperties.Robot robot, List<String> userids, String message, String title) throws Exception {
         JSONObject msg = new JSONObject();
-        msg.put(TEXT, message);
+        msg.put(MessageTypeEnum.TEXT.getCode(), message);
         msg.put(TITLE, title);
         BatchSendOTOHeaders batchSendOTOHeaders = new BatchSendOTOHeaders();
         batchSendOTOHeaders.xAcsDingtalkAccessToken = getRobotToken(robot, true);
@@ -108,6 +122,7 @@ public class RobotUtil extends StringPool {
                 .setMsgParam(String.valueOf(msg));
         client.batchSendOTOWithOptions(batchSendOTORequest, batchSendOTOHeaders, new RuntimeOptions());
     }
+
 
     /**
      * 向指定群机器人发送消息
@@ -185,7 +200,7 @@ public class RobotUtil extends StringPool {
      */
     public static void sendHookMessage(RobotsHookProperties.Robot robot, String message, List<String> phones) throws Exception {
         RobotSendRequest request = new RobotSendRequest();
-        request.setMsgtype(TEXT);
+        request.setMsgtype(MessageTypeEnum.TEXT.getCode());
         RobotSendRequest.At at = new RobotSendRequest.At();
         if (null != phones) {
             phones = phones.stream().filter(it -> !StringUtils.isEmpty(it)).collect(Collectors.toList());
@@ -224,7 +239,7 @@ public class RobotUtil extends StringPool {
      */
     public static void sendHookMessageAtAll(RobotsHookProperties.Robot robot, String message) throws Exception {
         RobotSendRequest request = new RobotSendRequest();
-        request.setMsgtype(TEXT);
+        request.setMsgtype(MessageTypeEnum.TEXT.getCode());
         RobotSendRequest.At at = new RobotSendRequest.At();
         at.setAtAll(true);
         at.setAtMobiles(new ArrayList<>());
@@ -235,6 +250,29 @@ public class RobotUtil extends StringPool {
         send(robot, request);
     }
 
+    /**
+     * 发送链接消息
+     */
+    public static void sendLinkMessageByPhone(RobotsProperties.Robot robot, String phone, String title, String text, String messageUrl, String picUrl) throws Exception {
+        RobotSendRequest.Link link = new RobotSendRequest.Link();
+        link.setTitle(title);
+        link.setText(text);
+        link.setPicUrl(picUrl);
+        link.setMessageUrl(messageUrl);
+
+        BatchSendOTOHeaders batchSendOTOHeaders = new BatchSendOTOHeaders();
+        batchSendOTOHeaders.xAcsDingtalkAccessToken = getRobotToken(robot, true);
+        BatchSendOTORequest batchSendOTORequest = new BatchSendOTORequest()
+                .setRobotCode(robot.getAppKey())
+                .setUserIds(getUserIdsByPhones(robot, Arrays.asList(phone)))
+                .setMsgKey(MessageTypeEnum.SAMPLE_LINK.getCode())
+                .setMsgParam(JSONObject.toJSONString(link));
+        client.batchSendOTOWithOptions(batchSendOTORequest, batchSendOTOHeaders, new RuntimeOptions());
+    }
+
+    /**
+     * 自定义发送
+     */
     public static void sendMessageByCustomHook(String webhook, String signature, String message, Boolean atAll, List<String> phones) throws Exception {
         RobotsHookProperties.Robot robot = new RobotsHookProperties.Robot();
         robot.setSignature(signature);
@@ -282,4 +320,5 @@ public class RobotUtil extends StringPool {
                 || JSONObject.parseObject(response.getBody(), RobotSendResponse.class).getErrcode() != 0)
             throw new RobotException("failed to send dingding message, response：" + response.getBody());
     }
+
 }
