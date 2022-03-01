@@ -26,7 +26,7 @@ public class DingtalkRobotAutoConfiguration {
     }
 
     @Bean
-    public SpringUtil spiringUtil(){
+    public SpringUtil spiringUtil() {
         return new SpringUtil();
     }
 }

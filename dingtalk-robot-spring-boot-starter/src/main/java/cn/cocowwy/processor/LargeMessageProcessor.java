@@ -52,7 +52,7 @@ public class LargeMessageProcessor extends Thread {
     private String processorThreadNameSbufix = "@@Processor";
     private String listenerThreadNameSbufix = "@@Listener";
 
-    public LargeMessageProcessor(RobotsHookProperties.Robot robot) {
+    public  LargeMessageProcessor(RobotsHookProperties.Robot robot) {
         this.hookLabel = robot.getLabel();
         this.robot = robot;
         this.processorThreadNameSbufix = this.hookLabel + processorThreadNameSbufix;
