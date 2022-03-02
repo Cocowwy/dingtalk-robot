@@ -12,7 +12,7 @@ import org.springframework.core.annotation.Order;
  * @author cocowwy.cn
  * @create 2021-12-12-10:20
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties({RobotsHookProperties.class, RobotsProperties.class})
 public class DingtalkRobotAutoConfiguration {
 
