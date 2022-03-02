@@ -10,7 +10,7 @@
 </dependency>
 ```
 
-cocowwy-dingtalk-starter:   
+**cocowwy-dingtalk-starter:  ** 
 **拆箱即用，以便更灵活的将钉钉机器人快速的嵌入到业务里，用来应付在复杂场景里对不同业务类型的机器人来按需调用，同时会提供一些应付更复杂的业务场景的功能**  
 
 ![image](https://user-images.githubusercontent.com/63331147/153790868-79936b70-7008-484b-a749-dac3f304d257.png)
@@ -38,6 +38,7 @@ cocowwy-dingtalk-starter:
    - sendMessageByPhonesAt 根据手机号向指定人发送消息
    - sendMessageByUserIdsAt 根据用户id给指定人发送消息
    - getToken 查询指定机器人的token
+   - sendLinkMessageByPhones 发送link消息
 
 配置文件：
 ```yml
