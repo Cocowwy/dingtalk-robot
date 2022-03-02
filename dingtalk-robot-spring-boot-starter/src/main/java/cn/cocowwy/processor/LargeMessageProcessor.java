@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 /**
  * 每个webhook所对应的群机器人都有一个线程处理大消息
- *   - 借鉴的nacos的NotifyCenter源码设计
+ *   - 借鉴的nacos的NotifyCenter设计
  * @author cocowwy.cn
  * @create 2022-01-01-15:30
  */
@@ -52,7 +52,7 @@ public class LargeMessageProcessor extends Thread {
     private String processorThreadNameSbufix = "@@Processor";
     private String listenerThreadNameSbufix = "@@Listener";
 
-    public  LargeMessageProcessor(RobotsHookProperties.Robot robot) {
+    public LargeMessageProcessor(RobotsHookProperties.Robot robot) {
         this.hookLabel = robot.getLabel();
         this.robot = robot;
         this.processorThreadNameSbufix = this.hookLabel + processorThreadNameSbufix;
@@ -139,12 +139,16 @@ public class LargeMessageProcessor extends Thread {
                 }
                 // 发送消息
                 try {
-                    RobotUtil.sendText(hookLabel, largeMessage.toString(), ats.stream().collect(Collectors.toList()));
+                    // fix 消息結尾丢失的问题
+                    synchronized (largeMessage) {
+                        RobotUtil.sendText(hookLabel, largeMessage.toString(), ats.stream().collect(Collectors.toList()));
+                        // 直接赋空字符串会导致消息丢失问题
+                        largeMessage = largeMessage.delete(0, largeMessage.length());
+                    }
                 } catch (Exception e) {
                     LOGGER.error("send frequently msg error ,", e);
                 }
-                // 这里如果直接清空的话 并发情况下会消息丢失，只能截取字段
-                largeMessage = largeMessage.delete(0, largeMessage.length());
+
 
                 monitor = originalMonitor;
             }

@@ -12,4 +12,5 @@ public class StringPool {
     public static final String TITLE = "title";
     public static final String MOBILE = "mobile";
     public static final String SAMPLE_MARKDOWN = "sampleMarkdown";
+    public static final String EMPTY = "";
 }
