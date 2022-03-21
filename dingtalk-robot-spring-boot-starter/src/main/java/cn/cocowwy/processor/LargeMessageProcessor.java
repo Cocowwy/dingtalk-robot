@@ -6,7 +6,6 @@ import cn.hutool.core.collection.ConcurrentHashSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
@@ -71,7 +70,7 @@ public class LargeMessageProcessor extends Thread {
         } catch (InterruptedException e) {
             LOGGER.error("添加消息异常，{}", e.getMessage());
         }
-        ats.addAll(new HashSet<>(atPhones.size()));
+        ats.addAll(atPhones);
     }
 
     /**
