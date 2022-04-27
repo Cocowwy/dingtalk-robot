@@ -36,15 +36,15 @@ dingding:
         signature: 钉钉群的机器人的signature
         webhook: 钉钉群的机器人的webhook
     robot:
-      - label: 钉钉机器人1
-        agentId: 钉钉机器人的agentId
-        appKey: 钉钉机器人appKey
-        appSecret: 钉钉机器人appSecret
-        tokenRefresh: 机器人Token的缓存时长，默认110min
-      - label: 钉钉机器人2
-        agentId: 钉钉机器人的agentId
-        appKey: 钉钉机器人appKey
-        appSecret: 钉钉机器人appSecret
+      - label: robot1
+        agentId: robot1的agentId
+        appKey: robot1的appKey
+        appSecret: robot1的appSecret
+        tokenRefresh:robot1 的 Token的缓存时长，默认110min
+      - label: robot2
+        agentId:robot2的agentId
+        appKey: robot2的appKey
+        appSecret: robot2的appSecret
 ```
 - hooks 是webhook机器人数组，你可以塞一堆机器人来控制对每个机器人在不同群发的消息
 - robot 是钉钉机器人数组,你也可以设置一堆机器人来私聊（骚扰）不同的人
@@ -71,17 +71,17 @@ public class Runner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
             // 发送群消息
-            dingTalkGroupApi.sendText("群1机器人","群机器人消息" );
+            dingTalkGroupApi.sendText("robot1","xxxxx" );
             
             // 发送群消息，并且@某人
-            dingTalkGroupApi.sendTextAndAt("群1机器人", "消息体","Arrays.asList("需要@的手机号，不需要则传空数组")");
+            dingTalkGroupApi.sendTextAndAt("robot1", "xxxxx","Arrays.asList("需要@的手机号，不需要则传空数组")");
             
                        
             // 多消息自动拼接（群消息） 
-            dingTalkGroupApi.sendFrequentlyMessage("群1机器人", "多消息自动拼接", Arrays.asList("需要@的手机号，不需要则传空数组"));
+            dingTalkGroupApi.sendFrequentlyMessage("robot1", "xxxxx", Arrays.asList("需要@的手机号，不需要则传空数组"));
     
             // 发送机器人私聊消息
-            dingTalkRobotApi.sendMessageByPhonesAt("钉钉机器人1", Arrays.asList("需要@的手机号，不需要则传空数组"), "根据手机号私聊", "标题");
+            dingTalkRobotApi.sendMessageByPhonesAt("robot1", Arrays.asList("需要@的手机号，不需要则传空数组"), "xxxxx", "标题");
         }
     }
 }
