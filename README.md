@@ -29,12 +29,12 @@
 dingding:
   robots:
     hooks:
-      - label: 群1机器人
-        signature: 钉钉群的机器人的signature
-        webhook: 钉钉群的机器人的webhook
-      - label: 群2机器人
-        signature: 钉钉群的机器人的signature
-        webhook: 钉钉群的机器人的webhook
+      - label: robotA
+        signature: robotA的signature
+        webhook: robotA的webhook
+      - label: robotB
+        signature: robotB的signature
+        webhook: robotB的webhook
     robot:
       - label: robot1
         agentId: robot1的agentId
@@ -81,7 +81,7 @@ public class Runner implements ApplicationRunner {
             dingTalkGroupApi.sendFrequentlyMessage("robot1", "xxxxx", Arrays.asList("需要@的手机号，不需要则传空数组"));
     
             // 发送机器人私聊消息
-            dingTalkRobotApi.sendMessageByPhonesAt("robot1", Arrays.asList("需要@的手机号，不需要则传空数组"), "xxxxx", "标题");
+            dingTalkRobotApi.sendMessageByPhonesAt("robotA", Arrays.asList("需要@的手机号，不需要则传空数组"), "xxxxx", "标题");
         }
     }
 }
