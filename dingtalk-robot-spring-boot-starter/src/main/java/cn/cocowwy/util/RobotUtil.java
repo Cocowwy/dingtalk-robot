@@ -102,6 +102,9 @@ public class RobotUtil extends StringPool {
      */
     public static void sendMessage2Sb(RobotsProperties.Robot robot, List<String> phones, String message, String title) throws Exception {
         List<String> userIds = getUserIdsByPhones(robot, phones);
+        if (CollectionUtils.isEmpty(userIds)) {
+            return;
+        }
         sendMessageByUserIds(robot, userIds, message, title);
     }
 
@@ -156,11 +159,8 @@ public class RobotUtil extends StringPool {
                 getUserId = restTemplate.postForEntity(GET_USERID_URL + getRobotToken(robot, true)
                         , getUerId, String.class);
                 userIds.add(String.valueOf(JSONObject.parseObject(String.valueOf(JSONObject.parseObject(getUserId.getBody()).get("result"))).get("userid")));
-            } catch (NullPointerException e) {
-                throw new IllegalArgumentException("No corresponding userid found for mobile phone number：" + phone);
-            } catch (ApiException e) {
-                // ingnore ..
-                logger.error(phone + " get userid error ," + getUserId);
+            } catch (Exception e) {
+                // ignore .. if get userId error ,just skip it !
             }
         });
         return userIds;

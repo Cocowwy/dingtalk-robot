@@ -37,6 +37,11 @@
             <version>1.18.4</version>
         </dependency>
         <dependency>
+            <groupId>cn.cocowwy</groupId>
+            <artifactId>showdb-spring-boot-starter</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.72</version>
