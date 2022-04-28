@@ -156,6 +156,8 @@ public class RobotUtil extends StringPool {
                 getUserId = restTemplate.postForEntity(GET_USERID_URL + getRobotToken(robot, true)
                         , getUerId, String.class);
                 userIds.add(String.valueOf(JSONObject.parseObject(String.valueOf(JSONObject.parseObject(getUserId.getBody()).get("result"))).get("userid")));
+            } catch (NullPointerException e) {
+                throw new IllegalArgumentException("No corresponding userid found for mobile phone number：" + phone);
             } catch (ApiException e) {
                 // ingnore ..
                 logger.error(phone + " get userid error ," + getUserId);
