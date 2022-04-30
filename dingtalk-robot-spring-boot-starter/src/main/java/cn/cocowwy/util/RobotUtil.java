@@ -161,6 +161,7 @@ public class RobotUtil extends StringPool {
                 userIds.add(String.valueOf(JSONObject.parseObject(String.valueOf(JSONObject.parseObject(getUserId.getBody()).get("result"))).get("userid")));
             } catch (Exception e) {
                 // ignore .. if get userId error ,just skip it !
+                logger.error("phone " + phone + " does not exist or gets an error, ignore it");
             }
         });
         return userIds;
