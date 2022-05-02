@@ -1,0 +1,24 @@
+{
+  "groups": [
+    {
+      "type": "cn.cocowwy.config.RobotsGlobalProperties",
+      "sourceType": "cn.cocowwy.config.RobotsGlobalProperties"
+    },
+    {
+      "type": "cn.cocowwy.config.RobotsHookProperties",
+      "sourceType": "cn.cocowwy.config.RobotsHookProperties"
+    },
+    {
+      "type": "cn.cocowwy.config.RobotsProperties",
+      "sourceType": "cn.cocowwy.config.RobotsProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "dingding.robots.enable",
+      "type": "java.lang.Boolean",
+      "description": "Whether to use dingding robot",
+      "defaultValue": true
+    },
+  ]
+}

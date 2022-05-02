@@ -3,6 +3,7 @@ package cn.cocowwy.config;
 import cn.cocowwy.dingtalk.DingTalkGroupApi;
 import cn.cocowwy.dingtalk.DingTalkRobotApi;
 import cn.cocowwy.util.SpringUtil;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +14,10 @@ import org.springframework.core.annotation.Order;
  * @create 2021-12-12-10:20
  */
 @Configuration(proxyBeanMethods = false)
-@EnableConfigurationProperties({RobotsHookProperties.class, RobotsProperties.class})
+@EnableConfigurationProperties({RobotsGlobalProperties.class,
+        RobotsHookProperties.class,
+        RobotsProperties.class})
+@ConditionalOnProperty("")
 public class DingtalkRobotAutoConfiguration {
 
     @Bean
