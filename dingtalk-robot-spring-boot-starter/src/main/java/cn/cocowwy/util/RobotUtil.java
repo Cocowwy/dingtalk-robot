@@ -45,11 +45,16 @@ import java.util.stream.Collectors;
  */
 public class RobotUtil extends StringPool {
     private static final Log logger = LogFactory.getLog(RobotUtil.class);
-    private static final RestTemplate restTemplate = new RestTemplate();
+    /**
+     * Token缓存
+     */
     private static TimedCache<String, String> tokenCachePool = CacheUtil.newTimedCache(0L);
-    private static Client client = null;
-    // 机器人hook标识--->消息处理器
+    /**
+     * 机器人hook标识--->消息处理器
+     */
     public static Map<String, LargeMessageProcessor> largeMessageMap = new ConcurrentHashMap<>();
+    private static final RestTemplate restTemplate = new RestTemplate();
+    private static Client client = null;
 
     static {
         Config config = new Config();

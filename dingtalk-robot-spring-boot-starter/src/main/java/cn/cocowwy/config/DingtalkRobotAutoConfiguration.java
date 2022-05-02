@@ -14,10 +14,7 @@ import org.springframework.core.annotation.Order;
  * @create 2021-12-12-10:20
  */
 @Configuration(proxyBeanMethods = false)
-@EnableConfigurationProperties({RobotsGlobalProperties.class,
-        RobotsHookProperties.class,
-        RobotsProperties.class})
-@ConditionalOnProperty("")
+@EnableConfigurationProperties({RobotsHookProperties.class, RobotsProperties.class})
 public class DingtalkRobotAutoConfiguration {
 
     @Bean
