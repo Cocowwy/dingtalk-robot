@@ -1,10 +1,6 @@
 {
   "groups": [
     {
-      "type": "cn.cocowwy.config.RobotsGlobalProperties",
-      "sourceType": "cn.cocowwy.config.RobotsGlobalProperties"
-    },
-    {
       "type": "cn.cocowwy.config.RobotsHookProperties",
       "sourceType": "cn.cocowwy.config.RobotsHookProperties"
     },
@@ -15,10 +11,44 @@
   ],
   "properties": [
     {
-      "name": "dingding.robots.enable",
-      "type": "java.lang.Boolean",
-      "description": "Whether to use dingding robot",
-      "defaultValue": true
+      "name": "dingding.robots.hooks.label",
+      "type": "java.lang.String",
+      "description": "Unique identifier for swarm robots"
     },
+    {
+      "name": "dingding.robots.hooks.signature",
+      "type": "java.lang.String",
+      "description": "signature"
+    },
+    {
+      "name": "dingding.robots.hooks.webhook",
+      "type": "java.lang.String",
+      "description": "webhook"
+    },
+    {
+      "name": "dingding.robots.robot.label",
+      "type": "java.lang.String",
+      "description": "Unique identifier for swarm robots"
+    },
+    {
+      "name": "dingding.robots.robot.agentId",
+      "type": "java.lang.String",
+      "description": "agentId"
+    },
+    {
+      "name": "dingding.robots.robot.appKey",
+      "type": "java.lang.String",
+      "description": "appKey"
+    },
+    {
+      "name": "dingding.robots.robot.appSecret",
+      "type": "java.lang.String",
+      "description": "appKey"
+    },
+    {
+      "name": "dingding.robots.robot.tokenRefresh",
+      "type": "java.lang.Long",
+      "description": "token cache duration in minutes"
+    }
   ]
 }
