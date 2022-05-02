@@ -18,7 +18,6 @@ import com.aliyun.teautil.models.RuntimeOptions;
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
 import com.dingtalk.api.request.OapiGettokenRequest;
-import com.dingtalk.api.request.OapiRobotSendRequest;
 import com.dingtalk.api.response.OapiGettokenResponse;
 import com.taobao.api.ApiException;
 import org.apache.commons.logging.Log;
@@ -109,7 +108,7 @@ public class RobotUtil extends StringPool {
     }
 
     /**
-     * 根据userId发送
+     * 根据 userId 发送
      * @param robot
      * @param userids
      * @param message
@@ -122,12 +121,22 @@ public class RobotUtil extends StringPool {
         msg.put(TITLE, title);
         BatchSendOTOHeaders batchSendOTOHeaders = new BatchSendOTOHeaders();
         batchSendOTOHeaders.xAcsDingtalkAccessToken = getRobotToken(robot, true);
-        BatchSendOTORequest batchSendOTORequest = new BatchSendOTORequest()
-                .setRobotCode(robot.getAppKey())
-                .setUserIds(userids)
-                .setMsgKey(SAMPLE_MARKDOWN)
-                .setMsgParam(String.valueOf(msg));
-        client.batchSendOTOWithOptions(batchSendOTORequest, batchSendOTOHeaders, new RuntimeOptions());
+
+        // 钉钉平台限制 20 ，所以需要拆分
+        splitList(userids, 20).forEach(it -> {
+            BatchSendOTORequest batchSendOTORequest = new BatchSendOTORequest()
+                    .setRobotCode(robot.getAppKey())
+                    .setUserIds(it)
+                    .setMsgKey(SAMPLE_MARKDOWN)
+                    .setMsgParam(String.valueOf(msg));
+            try {
+                client.batchSendOTOWithOptions(batchSendOTORequest, batchSendOTOHeaders, new RuntimeOptions());
+            } catch (Exception e) {
+                logger.error("send by userIds error , userIds " + "[" + Arrays.toString(it.toArray()) + "]");
+            }
+        });
+
+
     }
 
     /**
@@ -325,6 +334,23 @@ public class RobotUtil extends StringPool {
         if (response.getStatusCode() != HttpStatus.OK
                 || JSONObject.parseObject(response.getBody(), RobotSendResponse.class).getErrcode() != 0)
             throw new RobotException("failed to send dingding message, response：" + response.getBody());
+    }
+
+    /**
+     * 集合拆分
+     */
+    public static <T> List<List<T>> splitList(List<T> list, int len) {
+        if (list == null || list.size() == 0 || len < 1) {
+            return null;
+        }
+        List<List<T>> result = new ArrayList<>();
+        int size = list.size();
+        int count = (size + len - 1) / len;
+        for (int i = 0; i < count; i++) {
+            List<T> subList = list.subList(i * len, ((i + 1) * len > size ? size : (i + 1) * len));
+            result.add(subList);
+        }
+        return result;
     }
 
 }
