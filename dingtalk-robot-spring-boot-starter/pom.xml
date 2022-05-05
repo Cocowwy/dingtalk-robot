@@ -110,7 +110,4 @@
         </plugins>
         <finalName>${project.artifactId}-${version}</finalName>
     </build>
-
-
-
 </project>
