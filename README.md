@@ -17,11 +17,11 @@
 
 ## pom.xml：
 ```
-<dependency>
-  <groupId>cn.cocowwy</groupId>
-  <artifactId>cocowwy-dingtalk-robot</artifactId>
-  <version>1.0.4-RELEASE</version>
-</dependency>
+ <dependency>
+     <groupId>cn.cocowwy</groupId>
+     <artifactId>cocowwy-dingtalk-robot</artifactId>
+     <version>1.0.6.RELEASE</version>
+ </dependency>
 ```
 
 ## yml：
