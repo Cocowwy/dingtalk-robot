@@ -13,7 +13,7 @@
 
     <groupId>cn.cocowwy</groupId>
     <artifactId>cocowwy-dingtalk-robot</artifactId>
-    <version>1.0.5-RELEASE</version>
+    <version>1.0.6.RELEASE</version>
 
     <properties>
         <java.version>1.8</java.version>
@@ -89,12 +89,10 @@
     <distributionManagement>
         <repository>
             <id>release</id>
-            <name>dingtalk-robot-1.0.0-RELEASE</name>
             <url>https://s01.oss.sonatype.org/content/repositories/releases/</url>
         </repository>
         <snapshotRepository>
             <id>snapshots</id>
-            <name>dingtalk-robot-1.0.0-SNAPSHOTS</name>
             <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
