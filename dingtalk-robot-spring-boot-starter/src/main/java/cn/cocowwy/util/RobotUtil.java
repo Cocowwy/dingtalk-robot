@@ -162,7 +162,7 @@ public class RobotUtil extends StringPool {
      * @param phones
      * @return
      */
-    private static List<String> getUserIdsByPhones(RobotsProperties.Robot robot, List<String> phones) {
+    public static List<String> getUserIdsByPhones(RobotsProperties.Robot robot, List<String> phones) {
         List<String> userIds = new ArrayList<>();
 
         phones.stream().filter(it -> !StringUtils.isEmpty(it)).forEach(phone -> {

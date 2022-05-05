@@ -3,8 +3,6 @@ package cn.cocowwy.dingtalk;
 import cn.cocowwy.config.RobotsProperties;
 import cn.cocowwy.util.RobotUtil;
 import com.taobao.api.ApiException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
@@ -18,8 +16,6 @@ import java.util.stream.Collectors;
  * @create 2021-12-12-17:22
  */
 public class DingTalkRobotApi {
-    private static final Log logger = LogFactory.getLog(RobotUtil.class);
-
     @Autowired
     private RobotsProperties robotsProperties;
 
@@ -80,5 +76,16 @@ public class DingTalkRobotApi {
     public String getToken(String label, Boolean useCache) throws ApiException {
         List<RobotsProperties.Robot> robots = RobotUtil.getRobot(label, robotsProperties.getRobot());
         return RobotUtil.getRobotToken(CollectionUtils.lastElement(robots), Optional.ofNullable(useCache).orElse(true));
+    }
+
+    /**
+     * 查询钉钉的用户userId
+     * @param label 机器人标识
+     * @param phones 手机号
+     * @return
+     */
+    public List<String> getUserIdByPhone(String label, List<String> phones) {
+        List<RobotsProperties.Robot> robots = RobotUtil.getRobot(label, robotsProperties.getRobot());
+        return RobotUtil.getUserIdsByPhones(CollectionUtils.lastElement(robots), phones);
     }
 }
