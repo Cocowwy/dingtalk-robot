@@ -137,7 +137,7 @@ public class RobotUtil extends StringPool {
             try {
                 client.batchSendOTOWithOptions(batchSendOTORequest, batchSendOTOHeaders, new RuntimeOptions());
             } catch (Exception e) {
-                logger.error("send by userIds error , userIds " + "[" + Arrays.toString(it.toArray()) + "]");
+                logger.error("Send by userIds error , userIds " + "[" + Arrays.toString(it.toArray()) + "] ,err msg:", e);
             }
         });
 
@@ -175,7 +175,7 @@ public class RobotUtil extends StringPool {
                 userIds.add(String.valueOf(JSONObject.parseObject(String.valueOf(JSONObject.parseObject(getUserId.getBody()).get("result"))).get("userid")));
             } catch (Exception e) {
                 // ignore .. if get userId error ,just skip it !
-                logger.error("phone " + phone + " does not exist or gets an error, ignore it");
+                logger.error("Phone " + phone + " does not exist or gets an error, ignore it,err msg:", e);
             }
         });
         return userIds;
@@ -284,7 +284,7 @@ public class RobotUtil extends StringPool {
         batchSendOTOHeaders.xAcsDingtalkAccessToken = getRobotToken(robot, true);
         BatchSendOTORequest batchSendOTORequest = new BatchSendOTORequest()
                 .setRobotCode(robot.getAppKey())
-                .setUserIds(getUserIdsByPhones(robot, Arrays.asList(phone)))
+                .setUserIds(getUserIdsByPhones(robot, Collections.singletonList(phone)))
                 .setMsgKey(MessageTypeEnum.SAMPLE_LINK.getCode())
                 .setMsgParam(JSONObject.toJSONString(link));
         client.batchSendOTOWithOptions(batchSendOTORequest, batchSendOTOHeaders, new RuntimeOptions());
@@ -337,7 +337,7 @@ public class RobotUtil extends StringPool {
 
         ResponseEntity<String> response = restTemplate.postForEntity(endpoint, httpEntity, String.class);
         if (response.getStatusCode() != HttpStatus.OK
-                || JSONObject.parseObject(response.getBody(), RobotSendResponse.class).getErrcode() != 0)
+                || Objects.requireNonNull(JSONObject.parseObject(response.getBody(), RobotSendResponse.class)).getErrcode() != 0)
             throw new RobotException("failed to send dingding message, response：" + response.getBody());
     }
 
@@ -352,7 +352,7 @@ public class RobotUtil extends StringPool {
         int size = list.size();
         int count = (size + len - 1) / len;
         for (int i = 0; i < count; i++) {
-            List<T> subList = list.subList(i * len, ((i + 1) * len > size ? size : (i + 1) * len));
+            List<T> subList = list.subList(i * len, (Math.min((i + 1) * len, size)));
             result.add(subList);
         }
         return result;
