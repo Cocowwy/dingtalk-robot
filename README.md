@@ -48,6 +48,8 @@ dingding:
         agentId: robot2的agentId
         appKey: robot2的appKey
         appSecret: robot2的appSecret
+        whitelist: 1234,3456
+        ban: false
 ```
 
 ### 🍓参数说明：
