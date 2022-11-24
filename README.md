@@ -43,7 +43,7 @@ dingding:
         appSecret: robot1的appSecret
         whitelist: 1234,3456
         ban: true
-        tokenRefresh:robot1 的 Token的缓存时长，默认110min
+        tokenRefresh: robot1 的 Token的缓存时长，默认110min
       - label: robot2
         agentId: robot2的agentId
         appKey: robot2的appKey
