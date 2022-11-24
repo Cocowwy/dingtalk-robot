@@ -14,13 +14,14 @@
   - 对token进行自定义缓存时间，调用方可以无需考虑钉钉开放平台对token获取接口的限流，api会自动对token进行自定义时长的缓存
   - 实现一个消息能被同一个分组内的机器人随机消费，按权重消费（coding...）
   - 发送带有link链接的单聊机器人
+  - 白名单控制发送，以及禁用发送功能
 
 ## pom.xml：
 ```
  <dependency>
      <groupId>cn.cocowwy</groupId>
      <artifactId>cocowwy-dingtalk-robot</artifactId>
-     <version>1.0.6.RELEASE</version>
+     <version>1.0.7</version>
  </dependency>
 ```
 
@@ -40,6 +41,8 @@ dingding:
         agentId: robot1的agentId
         appKey: robot1的appKey
         appSecret: robot1的appSecret
+        whitelist: 1234,3456
+        ban: true
         tokenRefresh:robot1 的 Token的缓存时长，默认110min
       - label: robot2
         agentId:robot2的agentId
@@ -49,6 +52,10 @@ dingding:
 - hooks 是webhook机器人数组，你可以塞一堆机器人来控制对每个机器人在不同群发的消息
 - robot 是钉钉机器人数组,你也可以设置一堆机器人来私聊（骚扰）不同的人
 
+### 🍓参数说明：
+label： 在使用api进行发送时，指定使用的哪一个机器人或者webhook的配置   
+whitelist： 白名单，当白名单指定之后（用户的钉钉userid），发送对象会和白名单取并集进行发送，如果不指定白名单，则无视白名单功能       
+ban：是否使用禁止发送功能，默认是false，开启后，将不会进行消息的发送   
 
 ### 如何使用？
 注入即可使用相应的API，您只需在调用处传入你所需要使用的机器人的**label**即可实现调用
