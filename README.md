@@ -45,14 +45,14 @@ dingding:
         ban: true
         tokenRefresh:robot1 的 Token的缓存时长，默认110min
       - label: robot2
-        agentId:robot2的agentId
+        agentId: robot2的agentId
         appKey: robot2的appKey
         appSecret: robot2的appSecret
 ```
-- hooks 是webhook机器人数组，你可以塞一堆机器人来控制对每个机器人在不同群发的消息
-- robot 是钉钉机器人数组,你也可以设置一堆机器人来私聊（骚扰）不同的人
 
 ### 🍓参数说明：
+hooks： 是webhook机器人数组，你可以塞一堆机器人来控制对每个机器人在不同群发的消息
+robot 是钉钉机器人数组,你也可以设置一堆机器人来私聊（骚扰）不同的人
 label： 在使用api进行发送时，指定使用的哪一个机器人或者webhook的配置   
 whitelist： 白名单，当白名单指定之后（用户的钉钉userid），发送对象会和白名单取并集进行发送，如果不指定白名单，则无视白名单功能       
 ban：是否使用禁止发送功能，默认是false，开启后，将不会进行消息的发送   
