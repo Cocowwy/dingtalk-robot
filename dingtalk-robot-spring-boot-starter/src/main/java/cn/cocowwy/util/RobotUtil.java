@@ -43,7 +43,7 @@ import java.util.stream.Collectors;
  * @author cocowwy.cn
  * @create 2021-12-12-11:31
  */
-public class RobotUtil extends StringPool {
+public class RobotUtil extends StringPool implements Filter {
     private static final Log logger = LogFactory.getLog(RobotUtil.class);
     /**
      * Token缓存
@@ -121,11 +121,18 @@ public class RobotUtil extends StringPool {
      * @throws Exception
      */
     public static void sendMessageByUserIds(RobotsProperties.Robot robot, List<String> userids, String message, String title) throws Exception {
+        // 禁用发送功能
+        if (robot.getBan()) {
+            return;
+        }
+
         JSONObject msg = new JSONObject();
         msg.put(MessageTypeEnum.TEXT.getCode(), message);
         msg.put(TITLE, title);
         BatchSendOTOHeaders batchSendOTOHeaders = new BatchSendOTOHeaders();
         batchSendOTOHeaders.xAcsDingtalkAccessToken = getRobotToken(robot, true);
+
+        userids = Filter.filterDingUserIds(robot, userids);
 
         // 钉钉平台限制 20 ，所以需要拆分
         splitList(userids, 20).forEach(it -> {

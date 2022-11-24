@@ -49,6 +49,16 @@
       "name": "dingding.robots.robot.tokenRefresh",
       "type": "java.lang.Long",
       "description": "token cache duration in minutes"
+    },
+    {
+      "name": "dingding.robots.robot.whitelist",
+      "type": "java.lang.List",
+      "description": "whitelist"
+    },
+    {
+      "name": "dingding.robots.robot.Boolean",
+      "type": "java.lang.Long",
+      "description": "disabling the sending function"
     }
   ]
 }

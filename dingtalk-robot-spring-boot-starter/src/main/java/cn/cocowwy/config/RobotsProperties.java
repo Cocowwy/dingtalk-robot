@@ -27,6 +27,14 @@ public class RobotsProperties {
         private String appKey;
         private String appSecret;
         private Integer tokenRefresh = 110;
+        /**
+         * 白名单 为空则允许所有，存在值则仅白名单进行发送
+         */
+        private List<String> whitelist = new ArrayList<>();
+        /**
+         * 是否禁用发送功能
+         */
+        private Boolean ban = Boolean.FALSE;
 
         public String getAgentId() {
             return agentId;
@@ -66,6 +74,22 @@ public class RobotsProperties {
 
         public void setTokenRefresh(Integer tokenRefresh) {
             this.tokenRefresh = tokenRefresh;
+        }
+
+        public List<String> getWhitelist() {
+            return whitelist;
+        }
+
+        public Boolean getBan() {
+            return ban;
+        }
+
+        public void setBan(Boolean ban) {
+            this.ban = ban;
+        }
+
+        public void setWhitelist(List<String> whitelist) {
+            this.whitelist = whitelist;
         }
     }
 }

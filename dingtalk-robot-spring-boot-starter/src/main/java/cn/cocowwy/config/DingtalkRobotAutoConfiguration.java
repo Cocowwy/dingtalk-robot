@@ -3,7 +3,6 @@ package cn.cocowwy.config;
 import cn.cocowwy.dingtalk.DingTalkGroupApi;
 import cn.cocowwy.dingtalk.DingTalkRobotApi;
 import cn.cocowwy.util.SpringUtil;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +28,7 @@ public class DingtalkRobotAutoConfiguration {
 
     @Bean
     @Order(Integer.MAX_VALUE)
-    public SpringUtil spiringUtil() {
+    public SpringUtil springUtil() {
         return new SpringUtil();
     }
 }

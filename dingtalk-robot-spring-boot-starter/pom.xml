@@ -13,7 +13,7 @@
 
     <groupId>cn.cocowwy</groupId>
     <artifactId>cocowwy-dingtalk-robot</artifactId>
-    <version>1.0.6.RELEASE</version>
+    <version>1.0.7</version>
 
     <properties>
         <java.version>1.8</java.version>
