@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 
 /**
  * 每个webhook所对应的群机器人都有一个线程处理大消息
- *   - 借鉴的nacos的NotifyCenter设计
  * @author cocowwy.cn
  * @create 2022-01-01-15:30
  */
